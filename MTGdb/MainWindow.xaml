@@ -1,0 +1,384 @@
+﻿<Window x:Class="MTGdb.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MTGdb"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="850" Width="1200"
+        ResizeMode="NoResize"
+        WindowStyle= "None"
+        Background="#44318D"
+        MouseDown="Window_MouseDown">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Grid Background="#2A1B3D"
+              Grid.ColumnSpan="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="👑 MTGdb"
+                       Foreground="White"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       FontFamily="Fonts/#Quicksand"
+                       FontSize="20px">
+            </TextBlock>
+        </Grid>
+
+        <Grid Grid.Row="1"
+              Grid.Column="0">
+            <ListBox Margin="100,0,100,0" Height="219" VerticalAlignment="Center" FontSize="20" SelectionChanged="ListBox_SelectionChanged">
+                <!--<ListBoxItem>Search For Card(s)</ListBoxItem>-->
+                <!--<ListBoxItem>Search By Card Text</ListBoxItem>-->
+                <ListBoxItem>1 - Display All Cards</ListBoxItem>
+                <ListBoxItem>2 - Filter By Color</ListBoxItem>
+                <ListBoxItem>3 - Filter By Type</ListBoxItem>
+                <ListBoxItem>4 - Filter By Subtype</ListBoxItem>
+                <ListBoxItem>5 - Filter By CMC</ListBoxItem>
+                <ListBoxItem>6 - Filter By Keyword</ListBoxItem>
+                <ListBoxItem>7 - Display Prices</ListBoxItem>
+                <!--<ListBoxItem>Manage Lists</ListBoxItem>-->
+                <!--<ListBoxItem>Remove Card</ListBoxItem>-->
+                <!-- CMC, Display all, Type/subtype, color, keyword, pricing done  -->
+            </ListBox>
+        </Grid>
+        <Grid Grid.Column="2"
+              Grid.RowSpan="2"
+              Margin="100,-450,-550,170"
+              Panel.ZIndex="-1">
+            <Grid.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="49.782"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Grid.RenderTransform>
+            <StackPanel Orientation="Horizontal"
+                        Margin="-58,265,-547,-265">
+                <StackPanel RenderTransformOrigin="0.5,0.5">
+                    <StackPanel.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform Angle="-108.441"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </StackPanel.RenderTransform>
+                    <Border Width="700"
+                            Height="35"
+                            Background="#D83F87"
+                            Margin="150,0,0,0"
+                            CornerRadius="20"/>
+                    <Border Width="276"
+                            Height="35"
+                            Background="#d8413f"
+                            Margin="0,15,0,0"
+                            CornerRadius="20"/>
+                    <Border Width="482"
+                            Height="35"
+                            Background="#d83fd3"
+                            Margin="75,15,0,0"
+                            CornerRadius="20" RenderTransformOrigin="0.506,0.501"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Column="1"
+              Grid.Row="1">
+
+            <ListView Height="441" VerticalAlignment="Center" Name="CardDisp" SelectionChanged="CardDisp_SelectionChanged" Visibility="Visible" Margin="10,0,10,0">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Special_name}"
+                                        Width="200">
+                            <GridViewColumn.Header>
+                                <GridViewColumnHeader Tag="Special_name" Click="CardDispColumnHeader_Click">Name</GridViewColumnHeader>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Set}"
+                                        Width="100">
+                            <GridViewColumn.Header>
+                                <GridViewColumnHeader Tag="Set" Click="CardDispColumnHeader_Click">Set</GridViewColumnHeader>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Printing}"
+                                        Width="100">
+                            <GridViewColumn.Header>
+                                <GridViewColumnHeader Tag="Printing" Click="CardDispColumnHeader_Click">Printing</GridViewColumnHeader>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Amount}"
+                                        Width="100">
+                            <GridViewColumn.Header>
+                                <GridViewColumnHeader Tag="Amount" Click="CardDispColumnHeader_Click">Amount</GridViewColumnHeader>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Database_id}"
+                                        Width="100">
+                            <GridViewColumn.Header>
+                                <GridViewColumnHeader Tag="Database_id" Click="CardDispColumnHeader_Click">ID</GridViewColumnHeader>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <ListView Height="441" VerticalAlignment="Center" Name="CardDispPrice" SelectionChanged="CardDisp_SelectionChanged" Visibility="Hidden" Margin="10,0,10,0">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Special_name}"
+                                        Width="200">
+                            <GridViewColumn.Header>
+                                <GridViewColumnHeader Tag="Special_name" Click="CardDispPriceColumnHeader_Click">Name</GridViewColumnHeader>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Set}"
+                                        Width="100">
+                            <GridViewColumn.Header>
+                                <GridViewColumnHeader Tag="Set" Click="CardDispPriceColumnHeader_Click">Set</GridViewColumnHeader>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Printing}"
+                                        Width="100">
+                            <GridViewColumn.Header>
+                                <GridViewColumnHeader Tag="Printing" Click="CardDispPriceColumnHeader_Click">Printing</GridViewColumnHeader>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Amount}"
+                                        Width="100">
+                            <GridViewColumn.Header>
+                                <GridViewColumnHeader Tag="Amount" Click="CardDispPriceColumnHeader_Click">Amount</GridViewColumnHeader>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Pricetotal}"
+                                        Width="100">
+                            <GridViewColumn.Header>
+                                <GridViewColumnHeader Tag="Pricetotal" Click="CardDispPriceColumnHeader_Click">Total</GridViewColumnHeader>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <ListView Height="441" VerticalAlignment="Center" Name="CardDispColorCMC" SelectionChanged="CardDisp_SelectionChanged" Visibility="Hidden" Margin="10,0,10,0">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Special_name}"
+                                        Header="Name" Width="200"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Set}"
+                                        Header="Set" Width="100"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Printing}"
+                                        Header="Printing" Width="100"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Amount}"
+                                        Header="Amount" Width="100"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Database_id}"
+                                        Header="ID" Width="100"/>
+                    </GridView>
+                </ListView.View>
+                <ListView.GroupStyle>
+                    <GroupStyle>
+                        <GroupStyle.ContainerStyle>
+                            <Style TargetType="{x:Type GroupItem}">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate>
+                                            <Expander IsExpanded="True">
+                                                <Expander.Header>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="{Binding Name.Display}" FontWeight="Bold" Foreground="Gray" FontSize="15" VerticalAlignment="Bottom" />
+                                                    </StackPanel>
+                                                </Expander.Header>
+                                                <ItemsPresenter />
+                                            </Expander>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </GroupStyle.ContainerStyle>
+                    </GroupStyle>
+                </ListView.GroupStyle>
+            </ListView>
+
+            <ListView Height="441" VerticalAlignment="Center" Name="CardDispColor" SelectionChanged="CardDisp_SelectionChanged" Visibility="Hidden" Margin="10,0,10,0">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Special_name}"
+                                        Header="Name" Width="200"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Set}"
+                                        Header="Set" Width="100"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Printing}"
+                                        Header="Printing" Width="100"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Amount}"
+                                        Header="Amount" Width="100"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Database_id}"
+                                        Header="ID" Width="100"/>
+                    </GridView>
+                </ListView.View>
+                <ListView.GroupStyle>
+                    <GroupStyle>
+                        <GroupStyle.ContainerStyle>
+                            <Style TargetType="{x:Type GroupItem}">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate>
+                                            <Expander IsExpanded="True">
+                                                <Expander.Header>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="{Binding Name}" FontWeight="Bold" Foreground="Gray" FontSize="15" VerticalAlignment="Bottom" />
+                                                    </StackPanel>
+                                                </Expander.Header>
+                                                <ItemsPresenter />
+                                            </Expander>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </GroupStyle.ContainerStyle>
+                    </GroupStyle>
+                </ListView.GroupStyle>
+            </ListView>
+
+            <ListView Height="441" VerticalAlignment="Center" Name="CardDispColorType" SelectionChanged="CardDispColorFil_SelectionChanged" Visibility="Hidden" Margin="10,0,10,0">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Thecard.Special_name}"
+                                        Header="Name" Width="200"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Thecard.Set}"
+                                        Header="Set" Width="100"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Thecard.Printing}"
+                                        Header="Printing" Width="100"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Thecard.Amount}"
+                                        Header="Amount" Width="100"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Thecard.Database_id}"
+                                        Header="ID" Width="100"/>
+                    </GridView>
+                </ListView.View>
+                <ListView.GroupStyle>
+                    <GroupStyle>
+                        <GroupStyle.ContainerStyle>
+                            <Style TargetType="{x:Type GroupItem}">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate>
+                                            <Expander IsExpanded="True">
+                                                <Expander.Header>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="{Binding Name.Display}" FontWeight="Bold" Foreground="Gray" FontSize="15" VerticalAlignment="Bottom" />
+                                                    </StackPanel>
+                                                </Expander.Header>
+                                                <ItemsPresenter />
+                                            </Expander>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </GroupStyle.ContainerStyle>
+                    </GroupStyle>
+                </ListView.GroupStyle>
+            </ListView>
+
+            <ListView Height="441" VerticalAlignment="Center" Name="CardDispColorSubtype" SelectionChanged="CardDispColorFil_SelectionChanged" Visibility="Hidden" Margin="10,0,10,0">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Thecard.Special_name}"
+                                        Header="Name" Width="200"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Thecard.Set}"
+                                        Header="Set" Width="100"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Thecard.Printing}"
+                                        Header="Printing" Width="100"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Thecard.Amount}"
+                                        Header="Amount" Width="100"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Thecard.Database_id}"
+                                        Header="ID" Width="100"/>
+                    </GridView>
+                </ListView.View>
+                <ListView.GroupStyle>
+                    <GroupStyle>
+                        <GroupStyle.ContainerStyle>
+                            <Style TargetType="{x:Type GroupItem}">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate>
+                                            <Expander IsExpanded="True">
+                                                <Expander.Header>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="{Binding Name.Display}" FontWeight="Bold" Foreground="Gray" FontSize="15" VerticalAlignment="Bottom" />
+                                                    </StackPanel>
+                                                </Expander.Header>
+                                                <ItemsPresenter />
+                                            </Expander>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </GroupStyle.ContainerStyle>
+                    </GroupStyle>
+                </ListView.GroupStyle>
+            </ListView>
+
+            <ListView Height="441" VerticalAlignment="Center" Name="CardDispColorKeyword" SelectionChanged="CardDispColorFil_SelectionChanged" Visibility="Hidden" Margin="10,0,10,0">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Thecard.Special_name}"
+                                        Header="Name" Width="200"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Thecard.Set}"
+                                        Header="Set" Width="100"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Thecard.Printing}"
+                                        Header="Printing" Width="100"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Thecard.Amount}"
+                                        Header="Amount" Width="100"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Thecard.Database_id}"
+                                        Header="ID" Width="100"/>
+                    </GridView>
+                </ListView.View>
+                <ListView.GroupStyle>
+                    <GroupStyle>
+                        <GroupStyle.ContainerStyle>
+                            <Style TargetType="{x:Type GroupItem}">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate>
+                                            <Expander IsExpanded="True">
+                                                <Expander.Header>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="{Binding Name.Display}" FontWeight="Bold" Foreground="Gray" FontSize="15" VerticalAlignment="Bottom" />
+                                                    </StackPanel>
+                                                </Expander.Header>
+                                                <ItemsPresenter />
+                                            </Expander>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </GroupStyle.ContainerStyle>
+                    </GroupStyle>
+                </ListView.GroupStyle>
+            </ListView>
+            <!--<ListBox Height="217" VerticalAlignment="Center" Name="CardDisp" SelectionChanged="CardDisp_SelectionChanged" SelectionMode="Single" HorizontalAlignment="Center" Width="280"/>-->
+            <!--<TextBlock Text="NAME - SET - PRINTING - AMOUNT - ID" TextWrapping="Wrap" Margin="0,136,0,0" Foreground="White" FontFamily="Fonts/#Quicksand" FontSize="13" VerticalAlignment="Top" HorizontalAlignment="Center"/>-->
+
+        </Grid>
+        <Grid Grid.Column="1"
+              Grid.Row="1" Grid.ColumnSpan="2" Margin="266,0,0,0">
+            <Image Name="CardImg" Margin="137,112,30,112"/>
+            <Image Name="CardImgF1" Margin="137,8,30,416"/>
+            <Image Name="CardImgF2" Margin="137,410,30,8"/>
+
+        </Grid>
+    </Grid>
+</Window>
