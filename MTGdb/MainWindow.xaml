@@ -101,7 +101,7 @@
         <Grid Grid.Column="1"
               Grid.Row="1">
 
-            <ListView Height="441" VerticalAlignment="Center" Name="CardDisp" SelectionChanged="CardDisp_SelectionChanged" Visibility="Visible" Margin="10,0,10,0">
+            <ListView Height="441" VerticalAlignment="Center" Name="CardDisp" SelectionChanged="CardDisp_SelectionChanged" Visibility="Visible" Margin="10,0,10,0" FontFamily="Fonts/#Quicksand">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn DisplayMemberBinding="{Binding Path=Special_name}"
@@ -138,7 +138,7 @@
                 </ListView.View>
             </ListView>
 
-            <ListView Height="441" VerticalAlignment="Center" Name="CardDispPrice" SelectionChanged="CardDisp_SelectionChanged" Visibility="Hidden" Margin="10,0,10,0">
+            <ListView Height="441" VerticalAlignment="Center" Name="CardDispPrice" SelectionChanged="CardDisp_SelectionChanged" Visibility="Hidden" Margin="10,0,10,0" FontFamily="Fonts/#Quicksand">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn DisplayMemberBinding="{Binding Path=Special_name}"
@@ -175,7 +175,7 @@
                 </ListView.View>
             </ListView>
 
-            <ListView Height="441" VerticalAlignment="Center" Name="CardDispColorCMC" SelectionChanged="CardDisp_SelectionChanged" Visibility="Hidden" Margin="10,0,10,0">
+            <ListView Height="441" VerticalAlignment="Center" Name="CardDispColorCMC" SelectionChanged="CardDisp_SelectionChanged" Visibility="Hidden" Margin="10,0,10,0" FontFamily="Fonts/#Quicksand">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn DisplayMemberBinding="{Binding Path=Special_name}"
@@ -214,7 +214,7 @@
                 </ListView.GroupStyle>
             </ListView>
 
-            <ListView Height="441" VerticalAlignment="Center" Name="CardDispColor" SelectionChanged="CardDisp_SelectionChanged" Visibility="Hidden" Margin="10,0,10,0">
+            <ListView Height="441" VerticalAlignment="Center" Name="CardDispColor" SelectionChanged="CardDisp_SelectionChanged" Visibility="Hidden" Margin="10,0,10,0" FontFamily="Fonts/#Quicksand">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn DisplayMemberBinding="{Binding Path=Special_name}"
@@ -253,7 +253,7 @@
                 </ListView.GroupStyle>
             </ListView>
 
-            <ListView Height="441" VerticalAlignment="Center" Name="CardDispColorType" SelectionChanged="CardDispColorFil_SelectionChanged" Visibility="Hidden" Margin="10,0,10,0">
+            <ListView Height="441" VerticalAlignment="Center" Name="CardDispColorType" SelectionChanged="CardDispColorFil_SelectionChanged" Visibility="Hidden" Margin="10,0,10,0" FontFamily="Fonts/#Quicksand">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn DisplayMemberBinding="{Binding Path=Thecard.Special_name}"
@@ -292,7 +292,7 @@
                 </ListView.GroupStyle>
             </ListView>
 
-            <ListView Height="441" VerticalAlignment="Center" Name="CardDispColorSubtype" SelectionChanged="CardDispColorFil_SelectionChanged" Visibility="Hidden" Margin="10,0,10,0">
+            <ListView Height="441" VerticalAlignment="Center" Name="CardDispColorSubtype" SelectionChanged="CardDispColorFil_SelectionChanged" Visibility="Hidden" Margin="10,0,10,0" FontFamily="Fonts/#Quicksand">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn DisplayMemberBinding="{Binding Path=Thecard.Special_name}"
@@ -331,7 +331,7 @@
                 </ListView.GroupStyle>
             </ListView>
 
-            <ListView Height="441" VerticalAlignment="Center" Name="CardDispColorKeyword" SelectionChanged="CardDispColorFil_SelectionChanged" Visibility="Hidden" Margin="10,0,10,0">
+            <ListView Height="441" VerticalAlignment="Center" Name="CardDispColorKeyword" SelectionChanged="CardDispColorFil_SelectionChanged" Visibility="Hidden" Margin="10,0,10,0" FontFamily="Fonts/#Quicksand">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn DisplayMemberBinding="{Binding Path=Thecard.Special_name}"
@@ -369,6 +369,29 @@
                     </GroupStyle>
                 </ListView.GroupStyle>
             </ListView>
+            <CheckBox Content="W" HorizontalAlignment="Left" Margin="73,638,0,0" VerticalAlignment="Top" FontFamily="Fonts/#Quicksand" Foreground="White" Checked="W_CheckedEvent" Unchecked="W_UncheckedEvent"/>
+            <CheckBox Content="U" HorizontalAlignment="Left" Margin="109,638,0,0" VerticalAlignment="Top" FontFamily="Fonts/#Quicksand" Foreground="White" Checked="U_CheckedEvent" Unchecked="U_UncheckedEvent"/>
+            <CheckBox Content="B" HorizontalAlignment="Left" Margin="142,638,0,0" VerticalAlignment="Top" FontFamily="Fonts/#Quicksand" Foreground="White" Checked="B_CheckedEvent" Unchecked="B_UncheckedEvent"/>
+            <CheckBox Content="R" HorizontalAlignment="Left" Margin="174,638,0,0" VerticalAlignment="Top" FontFamily="Fonts/#Quicksand" Foreground="White" Checked="R_CheckedEvent" Unchecked="R_UncheckedEvent"/>
+            <CheckBox Content="G" HorizontalAlignment="Left" Margin="206,638,0,0" VerticalAlignment="Top" FontFamily="Fonts/#Quicksand" Foreground="White" Checked="G_CheckedEvent" Unchecked="G_UncheckedEvent"/>
+            <CheckBox Content="C" HorizontalAlignment="Left" Margin="239,638,0,0" VerticalAlignment="Top" FontFamily="Fonts/#Quicksand" Foreground="White" Checked="C_CheckedEvent" Unchecked="C_UncheckedEvent"/>
+            <TextBox HorizontalAlignment="Left" Height="19" Margin="90,670,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" FontFamily="Fonts/#Quicksand" Name="CardNameBox" TextChanged="CardName_Textchanged"/>
+            <CheckBox Content="Exact" HorizontalAlignment="Left" Margin="295,672,0,0" VerticalAlignment="Top" FontFamily="Fonts/#Quicksand" Foreground="White" Checked="ExactCardName_CheckedEvent" Unchecked="ExactCardName_UncheckedEvent"/>
+            <TextBox HorizontalAlignment="Left" Height="19" Margin="90,694,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" FontFamily="Fonts/#Quicksand" Name="TypeBox" TextChanged="Type_Textchanged"/>
+            <CheckBox Content="Exact" HorizontalAlignment="Left" Margin="295,696,0,0" VerticalAlignment="Top" FontFamily="Fonts/#Quicksand" Foreground="White" Checked="ExactType_CheckedEvent" Unchecked="ExactType_UncheckedEvent"/>
+            <TextBlock HorizontalAlignment="Left" Height="17" Margin="21,670,0,0" Text="Card Name:" TextWrapping="Wrap" VerticalAlignment="Top" Width="69" FontFamily="Fonts/#Quicksand" Foreground="White"/>
+            <TextBlock HorizontalAlignment="Left" Height="17" Margin="21,695,0,0" Text="Type:" TextWrapping="Wrap" VerticalAlignment="Top" Width="69" FontFamily="Fonts/#Quicksand" Foreground="White" Name="FilterLable"/>
+            <TextBox HorizontalAlignment="Left" Height="19" Margin="90,718,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" FontFamily="Fonts/#Quicksand" Name="SubtypeBox" TextChanged="Subtype_Textchanged"/>
+            <TextBlock HorizontalAlignment="Left" Height="17" Margin="21,719,0,0" Text="Subtype:" TextWrapping="Wrap" VerticalAlignment="Top" Width="69" FontFamily="Fonts/#Quicksand" Foreground="White"/>
+            <CheckBox Content="Exact" HorizontalAlignment="Left" Margin="295,720,0,0" VerticalAlignment="Top" FontFamily="Fonts/#Quicksand" Foreground="White" Checked="ExactSubtype_CheckedEvent" Unchecked="ExactSubtype_UncheckedEvent"/>
+            <TextBox HorizontalAlignment="Left" Height="19" Margin="90,742,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" FontFamily="Fonts/#Quicksand" Name="KeywordBox" TextChanged="Keyword_Textchanged"/>
+            <TextBlock HorizontalAlignment="Left" Height="17" Margin="21,743,0,0" Text="Keyword:" TextWrapping="Wrap" VerticalAlignment="Top" Width="69" FontFamily="Fonts/#Quicksand" Foreground="White"/>
+            <CheckBox Content="Exact" HorizontalAlignment="Left" Margin="295,744,0,0" VerticalAlignment="Top" FontFamily="Fonts/#Quicksand" Foreground="White" Checked="ExactKeyword_CheckedEvent" Unchecked="ExactKeyword_UncheckedEvent"/>
+            <TextBox HorizontalAlignment="Left" Height="19" Margin="90,766,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" FontFamily="Fonts/#Quicksand" Name="CMCBox" TextChanged="CMC_Textchanged"/>
+            <TextBlock HorizontalAlignment="Left" Height="17" Margin="21,767,0,0" Text="CMC:" TextWrapping="Wrap" VerticalAlignment="Top" Width="69" FontFamily="Fonts/#Quicksand" Foreground="White"/>
+            <TextBox HorizontalAlignment="Left" Height="19" Margin="90,790,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" FontFamily="Fonts/#Quicksand" Name="TextBox" TextChanged="Textbox_Textchanged"/>
+            <TextBlock HorizontalAlignment="Left" Height="17" Margin="21,791,0,0" Text="Text Box:" TextWrapping="Wrap" VerticalAlignment="Top" Width="69" FontFamily="Fonts/#Quicksand" Foreground="White"/>
+            <CheckBox Content="Has" HorizontalAlignment="Left" Margin="272,638,0,0" VerticalAlignment="Top" FontFamily="Fonts/#Quicksand" Foreground="White" Checked="Contains_CheckedEvent" Unchecked="Contains_UncheckedEvent"/>
             <!--<ListBox Height="217" VerticalAlignment="Center" Name="CardDisp" SelectionChanged="CardDisp_SelectionChanged" SelectionMode="Single" HorizontalAlignment="Center" Width="280"/>-->
             <!--<TextBlock Text="NAME - SET - PRINTING - AMOUNT - ID" TextWrapping="Wrap" Margin="0,136,0,0" Foreground="White" FontFamily="Fonts/#Quicksand" FontSize="13" VerticalAlignment="Top" HorizontalAlignment="Center"/>-->
 
