@@ -466,21 +466,27 @@ namespace MTGdb
             bool pass = false;
             if(colorsfil.Length > 0)
             {
-                if(!colorsfil.Contains("C"))
+                if(!colorsfil.Contains("C") || contains)
                 {
                     if (contains)
                     {
                         foreach (char color in colorsfil)
                         {
-                            if (card.Color_identity.Contains(color))
+                            if(color.Equals('C') && card.Color_identity.Count == 0)
                             {
                                 pass = true;
                                 break;
                             }
-                            if (!pass)
+                            else if (card.Color_identity.Contains(color))
                             {
-                                return false;
+                                pass = true;
+                                break;
                             }
+                        }
+
+                        if (!pass)
+                        {
+                            return false;
                         }
                     }
                     else
