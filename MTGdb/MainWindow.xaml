@@ -38,6 +38,8 @@
                        FontFamily="Fonts/#Quicksand"
                        FontSize="20px">
             </TextBlock>
+            <Button Content="X" Grid.Column="4" HorizontalAlignment="Left" Margin="190,0,0,0" VerticalAlignment="Center" Width="40" Foreground="Red" FontFamily="Fonts/#Quicksand" FontSize="15" Click="Close_ButtonClick"/>
+
         </Grid>
 
         <Grid Grid.Row="1"

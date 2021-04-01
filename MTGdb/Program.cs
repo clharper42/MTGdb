@@ -20,14 +20,19 @@ namespace MTGdb
         public static List<CardWithFilter> cardsbytype = new List<CardWithFilter>();
         public static List<CardWithFilter> cardsbysubtype = new List<CardWithFilter>();
         public static List<CardWithFilter> cardsbykeyword = new List<CardWithFilter>();
+        public static bool missfiledir = false;
+        public static bool missfiles = false;
+        public static string[] args;
         public static void Start()
         {
             string filedirc = Directory.GetCurrentDirectory() + "/Files";
             if (!System.IO.Directory.Exists(filedirc))
             {
-                Console.WriteLine("Mising 'Files' Directory");
-                Console.ReadLine();
-                Environment.Exit(0);
+                //Console.WriteLine("Mising 'Files' Directory");
+                //Console.ReadLine();
+                //Environment.Exit(0);
+                missfiledir = true;
+                return;
             }
 
             string dbpath = filedirc + "/Carddb.csv";
@@ -35,12 +40,14 @@ namespace MTGdb
 
             if (!File.Exists(dbpath) || !File.Exists(tcgpath))
             {
-                Console.WriteLine("Mising Carddb.csv and/or TCGplayer.csv In 'Files' Directory");
-                Console.ReadLine();
-                Environment.Exit(0);
+                //Console.WriteLine("Mising Carddb.csv and/or TCGplayer.csv In 'Files' Directory");
+                //Console.ReadLine();
+                //Environment.Exit(0);
+                missfiles = true;
+                return;
             }
 
-            string[] args = new string[] { dbpath, tcgpath };
+            args = new string[] { dbpath, tcgpath };
 
             List<ExcelCard> carddb = new List<ExcelCard>(); // REF TO DB
             List<ExcelCard> tcgplayercards = new List<ExcelCard>();
@@ -248,6 +255,17 @@ namespace MTGdb
             //{
             //  csv.WriteRecords(allcards);
             //}
+        }
+
+        static public void CloseApp()
+        {
+            System.IO.File.WriteAllText(@args[0], string.Empty);
+            System.IO.File.WriteAllText(@args[1], string.Empty);
+            using (var writer = new StreamWriter(args[0]))
+            using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+            {
+                csv.WriteRecords(allcards);
+            }
         }
     }
 }

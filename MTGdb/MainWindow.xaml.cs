@@ -36,6 +36,17 @@ namespace MTGdb
         public MainWindow()
         {
             Program.Start();
+            if(Program.missfiledir)
+            {
+                MessageBox.Show("Mising 'Files' Directory");
+                System.Windows.Application.Current.Shutdown();
+            }
+            else if(Program.missfiles)
+            {
+                MessageBox.Show("Mising Carddb.csv and/or TCGplayer.csv In 'Files' Directory");
+                System.Windows.Application.Current.Shutdown();
+            }
+
             InitializeComponent();
             CardDisp.ItemsSource = Program.allcards;
             CardDispPrice.ItemsSource = Program.allcards;
@@ -803,6 +814,12 @@ namespace MTGdb
         {
             Card card = (item as CardWithFilter).Thecard;
             return CheckCard(card);
+        }
+
+        private void Close_ButtonClick(object sender, RoutedEventArgs e)
+        {
+            Program.CloseApp();
+            System.Windows.Application.Current.Shutdown();
         }
 
     }
