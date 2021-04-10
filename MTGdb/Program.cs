@@ -20,6 +20,7 @@ namespace MTGdb
         public static List<CardWithFilter> cardsbytype = new List<CardWithFilter>();
         public static List<CardWithFilter> cardsbysubtype = new List<CardWithFilter>();
         public static List<CardWithFilter> cardsbykeyword = new List<CardWithFilter>();
+        public static List<CardList> cardlists = new List<CardList>();
         public static bool missfiledir = false;
         public static bool missfiles = false;
         public static string[] args;
@@ -244,17 +245,6 @@ namespace MTGdb
             {
                 return x.Coloridcmc.Display.CompareTo(y.Coloridcmc.Display);
             });
-
-            //https://www.wpf-tutorial.com/listview-control/listview-filtering/
-
-
-            // System.IO.File.WriteAllText(@args[0], string.Empty);
-            //System.IO.File.WriteAllText(@args[1], string.Empty);
-            //using (var writer = new StreamWriter(args[0]))
-            //using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
-            //{
-            //  csv.WriteRecords(allcards);
-            //}
         }
 
         static public void CloseApp()

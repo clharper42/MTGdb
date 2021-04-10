@@ -17,9 +17,6 @@ using System.Collections;
 
 namespace MTGdb
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         private GridViewColumnHeader listViewSortColPrice = null;
@@ -33,15 +30,20 @@ namespace MTGdb
         private bool exactsubtype = false;
         private bool exactkeyword = false;
         private IEnumerable theitemsource;
+        //list stuff
+        private List<int> cardidsincurlist = new List<int>(); //clear out on switch
+        private CardList selectedlist;
+        private bool createlist = false;
+        private bool dispalypage = true;
         public MainWindow()
         {
             Program.Start();
-            if(Program.missfiledir)
+            if (Program.missfiledir)
             {
                 MessageBox.Show("Mising 'Files' Directory");
                 System.Windows.Application.Current.Shutdown();
             }
-            else if(Program.missfiles)
+            else if (Program.missfiles)
             {
                 MessageBox.Show("Mising Carddb.csv and/or TCGplayer.csv In 'Files' Directory");
                 System.Windows.Application.Current.Shutdown();
@@ -54,113 +56,170 @@ namespace MTGdb
             theitemsource = CardDisp.ItemsSource;
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(theitemsource);
             view.Filter = MainDisplay_Filter;
-            //apply filter for normal display and cardprice
+
+
+            //list stuff
+            ListSelc.ItemsSource = Program.cardlists;
+            CardDispCreateList.ItemsSource = Program.allcards;
+
+            //theitemsource = CardDispCreateList.ItemsSource;
+            //CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(theitemsource);
+            //view.Filter = MainDisplay_Filter;
+
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ListBoxItem lbi = ((sender as ListBox).SelectedItem as ListBoxItem);
-            string selection = lbi.Content.ToString()[0].ToString();
 
-            CardDisp.Visibility = Visibility.Hidden;
-            CardDispPrice.Visibility = Visibility.Hidden;
-            CardDispColor.Visibility = Visibility.Hidden;
-            CardDispColorType.Visibility = Visibility.Hidden;
-            CardDispColorSubtype.Visibility = Visibility.Hidden;
-            CardDispColorCMC.Visibility = Visibility.Hidden;
-            CardDispColorKeyword.Visibility = Visibility.Hidden;
-
-            CardImg.Source = null;
-            CardImgF1.Source = null;
-            CardImgF2.Source = null;
-
-            CardDispColor.ItemsSource = null;
-            CardDispColorType.ItemsSource = null;
-            CardDispColorSubtype.ItemsSource = null;
-            CardDispColorCMC.ItemsSource = null;
-            CardDispColorKeyword.ItemsSource = null;
-
-            if (selection.Equals("1"))
+            if(!(lbi is null))
             {
-                CardDisp.Visibility = Visibility.Visible;
-                theitemsource = CardDisp.ItemsSource;
-                CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(theitemsource);
-                view.Filter = MainDisplay_Filter;
-            }
-            else if(selection.Equals("2"))
-            {
-                //CardDispColor.Visibility = Visibility.Visible;
-                //CollectionView view = (CollectionView)new CollectionViewSource { Source = Program.cardsbycolorandcmc }.View;
-                //PropertyGroupDescription groupDescription = new PropertyGroupDescription("Colorstring");
-                //view.GroupDescriptions.Add(groupDescription);
-                //CardDispColor.ItemsSource = view;
+                string selection = lbi.Content.ToString()[0].ToString();
 
-                CardDispColor.Visibility = Visibility.Visible;
-                CollectionView view = (CollectionView)new CollectionViewSource { Source = Program.cardsbycolorandcmc }.View;
-                PropertyGroupDescription groupDescription = new PropertyGroupDescription("Colorstring");
-                view.GroupDescriptions.Add(groupDescription);
-                CardDispColor.ItemsSource = view;
+                CardDisp.Visibility = Visibility.Hidden;
+                CardDispPrice.Visibility = Visibility.Hidden;
+                CardDispColor.Visibility = Visibility.Hidden;
+                CardDispColorType.Visibility = Visibility.Hidden;
+                CardDispColorSubtype.Visibility = Visibility.Hidden;
+                CardDispColorCMC.Visibility = Visibility.Hidden;
+                CardDispColorKeyword.Visibility = Visibility.Hidden;
 
-                theitemsource = CardDispColor.ItemsSource;
-                view.Filter = MainDisplay_Filter;
-            }
-            else if (selection.Equals("3"))
-            {
-                CardDispColorType.Visibility = Visibility.Visible;
-                CollectionView view = (CollectionView)new CollectionViewSource { Source = Program.cardsbytype }.View;
-                PropertyGroupDescription groupDescription = new PropertyGroupDescription("Coloridfilter");
-                view.GroupDescriptions.Add(groupDescription);
-                CardDispColorType.ItemsSource = view;
+                CardImg.Source = null;
+                CardImgF1.Source = null;
+                CardImgF2.Source = null;
 
-                theitemsource = CardDispColorType.ItemsSource;
-                view.Filter = GroupDispaly_Filter;
-            }
-            else if (selection.Equals("4"))
-            {
-                CardDispColorSubtype.Visibility = Visibility.Visible;
-                CollectionView view = (CollectionView)new CollectionViewSource { Source = Program.cardsbysubtype }.View;
-                PropertyGroupDescription groupDescription = new PropertyGroupDescription("Coloridfilter");
-                view.GroupDescriptions.Add(groupDescription);
-                CardDispColorSubtype.ItemsSource = view;
+                CardDispColor.ItemsSource = null;
+                CardDispColorType.ItemsSource = null;
+                CardDispColorSubtype.ItemsSource = null;
+                CardDispColorCMC.ItemsSource = null;
+                CardDispColorKeyword.ItemsSource = null;
 
-                theitemsource = CardDispColorSubtype.ItemsSource;
-                view.Filter = GroupDispaly_Filter;
-            }
-            else if (selection.Equals("5"))
-            {
-                CardDispColorCMC.Visibility = Visibility.Visible;
-                CollectionView view = (CollectionView)new CollectionViewSource { Source = Program.cardsbycolorandcmc }.View;
-                PropertyGroupDescription groupDescription = new PropertyGroupDescription("Coloridcmc");
-                view.GroupDescriptions.Add(groupDescription);
-                CardDispColorCMC.ItemsSource = view;
+                if (selection.Equals("1"))
+                {
+                    CardDisp.Visibility = Visibility.Visible;
+                    theitemsource = CardDisp.ItemsSource;
+                    CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(theitemsource);
+                    view.Filter = MainDisplay_Filter;
+                }
+                else if (selection.Equals("2"))
+                {
+                    //CardDispColor.Visibility = Visibility.Visible;
+                    //CollectionView view = (CollectionView)new CollectionViewSource { Source = Program.cardsbycolorandcmc }.View;
+                    //PropertyGroupDescription groupDescription = new PropertyGroupDescription("Colorstring");
+                    //view.GroupDescriptions.Add(groupDescription);
+                    //CardDispColor.ItemsSource = view;
 
-                theitemsource = CardDispColorCMC.ItemsSource;
-                view.Filter = MainDisplay_Filter;
-            }
-            else if (selection.Equals("6"))
-            {
-                CardDispColorKeyword.Visibility = Visibility.Visible;
-                CollectionView view = (CollectionView)new CollectionViewSource { Source = Program.cardsbykeyword }.View;
-                PropertyGroupDescription groupDescription = new PropertyGroupDescription("Coloridfilter");
-                view.GroupDescriptions.Add(groupDescription);
-                CardDispColorKeyword.ItemsSource = view;
+                    CardDispColor.Visibility = Visibility.Visible;
+                    CollectionView view = (CollectionView)new CollectionViewSource { Source = Program.cardsbycolorandcmc }.View;
+                    PropertyGroupDescription groupDescription = new PropertyGroupDescription("Colorstring");
+                    view.GroupDescriptions.Add(groupDescription);
+                    CardDispColor.ItemsSource = view;
 
-                theitemsource = CardDispColorKeyword.ItemsSource;
-                view.Filter = GroupDispaly_Filter;
+                    theitemsource = CardDispColor.ItemsSource;
+                    view.Filter = MainDisplay_Filter;
+                }
+                else if (selection.Equals("3"))
+                {
+                    CardDispColorType.Visibility = Visibility.Visible;
+                    CollectionView view = (CollectionView)new CollectionViewSource { Source = Program.cardsbytype }.View;
+                    PropertyGroupDescription groupDescription = new PropertyGroupDescription("Coloridfilter");
+                    view.GroupDescriptions.Add(groupDescription);
+                    CardDispColorType.ItemsSource = view;
+
+                    theitemsource = CardDispColorType.ItemsSource;
+                    view.Filter = GroupDispaly_Filter;
+                }
+                else if (selection.Equals("4"))
+                {
+                    CardDispColorSubtype.Visibility = Visibility.Visible;
+                    CollectionView view = (CollectionView)new CollectionViewSource { Source = Program.cardsbysubtype }.View;
+                    PropertyGroupDescription groupDescription = new PropertyGroupDescription("Coloridfilter");
+                    view.GroupDescriptions.Add(groupDescription);
+                    CardDispColorSubtype.ItemsSource = view;
+
+                    theitemsource = CardDispColorSubtype.ItemsSource;
+                    view.Filter = GroupDispaly_Filter;
+                }
+                else if (selection.Equals("5"))
+                {
+                    CardDispColorCMC.Visibility = Visibility.Visible;
+                    CollectionView view = (CollectionView)new CollectionViewSource { Source = Program.cardsbycolorandcmc }.View;
+                    PropertyGroupDescription groupDescription = new PropertyGroupDescription("Coloridcmc");
+                    view.GroupDescriptions.Add(groupDescription);
+                    CardDispColorCMC.ItemsSource = view;
+
+                    theitemsource = CardDispColorCMC.ItemsSource;
+                    view.Filter = MainDisplay_Filter;
+                }
+                else if (selection.Equals("6"))
+                {
+                    CardDispColorKeyword.Visibility = Visibility.Visible;
+                    CollectionView view = (CollectionView)new CollectionViewSource { Source = Program.cardsbykeyword }.View;
+                    PropertyGroupDescription groupDescription = new PropertyGroupDescription("Coloridfilter");
+                    view.GroupDescriptions.Add(groupDescription);
+                    CardDispColorKeyword.ItemsSource = view;
+
+                    theitemsource = CardDispColorKeyword.ItemsSource;
+                    view.Filter = GroupDispaly_Filter;
+                }
+                else if (selection.Equals("7"))
+                {
+                    CardDispPrice.Visibility = Visibility.Visible;
+                    theitemsource = CardDispPrice.ItemsSource;
+                    CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(theitemsource);
+                    view.Filter = MainDisplay_Filter;
+                }
+                else if (selection.Equals("8"))
+                {
+                    CardViewSelet.UnselectAll();
+
+                    CardViewSelet.Visibility = Visibility.Hidden;
+                    ListViewSelect.Visibility = Visibility.Visible;
+
+                    theitemsource = CardDispCreateList.ItemsSource;
+                    CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(theitemsource);
+                    view.Filter = MainDisplay_Filter;
+
+                    ListSelc.Visibility = Visibility.Visible;
+                    ListCardDispCreate.Visibility = Visibility.Visible;
+                    CardDispCreateList.Visibility = Visibility.Visible;
+                    ListName.Visibility = Visibility.Visible;
+                    ListNameBox.Visibility = Visibility.Visible;
+                    ListDes.Visibility = Visibility.Visible;
+                    ListDescBox.Visibility = Visibility.Visible;
+                    ListCardID.Visibility = Visibility.Visible;
+                    ListCardAmout.Visibility = Visibility.Visible;
+                    CardDBIDBox.Visibility = Visibility.Visible;
+                    CardAmountBox.Visibility = Visibility.Visible;
+                    CreateSaveBtn.Visibility = Visibility.Visible;
+                    AddCardToListBtn.Visibility = Visibility.Visible;
+                    UpdateCardInListBtn.Visibility = Visibility.Visible;
+                    RemoveCardListBtn.Visibility = Visibility.Visible;
+                    DeleteListBtn.Visibility = Visibility.Visible;
+
+
+                    CreateSaveBtn.Content = "Save";
+                    ListCardDispCreate.Height = 219;
+                    Thickness margin = ListCardDispCreate.Margin;
+                    margin.Left = 10;
+                    margin.Top = 50;
+                    margin.Left = 10;
+                    ListCardDispCreate.Margin = margin;
+                    ListSelc.Visibility = Visibility.Visible;
+                    dispalypage = true;
+                    createlist = false;
+                    ListSelc.Items.Refresh();
+                    ListSelc.SelectedIndex = -1;
+
+                }
             }
-            else if (selection.Equals("7"))
-            {
-                CardDispPrice.Visibility = Visibility.Visible;
-                theitemsource = CardDispPrice.ItemsSource;
-                CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(theitemsource);
-                view.Filter = MainDisplay_Filter;
-            }
+            
 
         }
 
         private void CardDisp_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(e.AddedItems.Count > 0)
+            if (e.AddedItems.Count > 0)
             {
                 Card selc = e.AddedItems[0] as Card;
                 if (!(selc.Image_uris is null))
@@ -214,11 +273,6 @@ namespace MTGdb
                 CardDispPrice.Items.SortDescriptions.Clear();
             }
 
-            //System.ComponentModel.ListSortDirection newDir = System.ComponentModel.ListSortDirection.Ascending;
-            //if (listViewSortCol == column)
-            //{
-            //    newDir = System.ComponentModel.ListSortDirection.Descending;
-            //}
 
             System.ComponentModel.ListSortDirection newDir;
             if (!ascendingprice)
@@ -246,12 +300,6 @@ namespace MTGdb
                 CardDisp.Items.SortDescriptions.Clear();
             }
 
-            //System.ComponentModel.ListSortDirection newDir = System.ComponentModel.ListSortDirection.Ascending;
-            //if (listViewSortCol == column)
-            //{
-            //    newDir = System.ComponentModel.ListSortDirection.Descending;
-            //}
-
             System.ComponentModel.ListSortDirection newDir;
             if (!ascending)
             {
@@ -276,7 +324,7 @@ namespace MTGdb
 
         private void W_CheckedEvent(object sender, RoutedEventArgs e)
         {
-            if(!colorsfil.Contains("W"))
+            if (!colorsfil.Contains("W"))
             {
                 colorsfil = colorsfil + "W";
             }
@@ -475,15 +523,15 @@ namespace MTGdb
         private bool CheckCard(Card card)
         {
             bool pass = false;
-            if(colorsfil.Length > 0)
+            if (colorsfil.Length > 0)
             {
-                if(!colorsfil.Contains("C") || contains)
+                if (!colorsfil.Contains("C") || contains)
                 {
                     if (contains)
                     {
                         foreach (char color in colorsfil)
                         {
-                            if(color.Equals('C') && card.Color_identity.Count == 0)
+                            if (color.Equals('C') && card.Color_identity.Count == 0)
                             {
                                 pass = true;
                                 break;
@@ -518,14 +566,14 @@ namespace MTGdb
                         }
                     }
                 }
-                else if(colorsfil.Contains("C") && card.Color_identity.Count > 0)
+                else if (colorsfil.Contains("C") && card.Color_identity.Count > 0)
                 {
                     return false;
                 }
 
             }
-     
-            if(!String.IsNullOrEmpty(CardNameBox.Text))
+
+            if (!String.IsNullOrEmpty(CardNameBox.Text))
             {
                 if (exactcardname)
                 {
@@ -546,20 +594,20 @@ namespace MTGdb
             pass = false;
             if (!String.IsNullOrEmpty(TypeBox.Text))
             {
-                if(exacttype)
+                if (exacttype)
                 {
-                    if(card.Card_faces is null)
+                    if (card.Card_faces is null)
                     {
-                        if(card.Type_line.Contains('—'))
+                        if (card.Type_line.Contains('—'))
                         {
-                            if(!card.Type_line.Substring(0, card.Type_line.IndexOf('—') - 1).ToLower().Equals(TypeBox.Text.ToLower()))
+                            if (!card.Type_line.Substring(0, card.Type_line.IndexOf('—') - 1).ToLower().Equals(TypeBox.Text.ToLower()))
                             {
                                 return false;
                             }
                         }
                         else
                         {
-                            if(!card.Type_line.ToLower().Equals(TypeBox.Text.ToLower()))
+                            if (!card.Type_line.ToLower().Equals(TypeBox.Text.ToLower()))
                             {
                                 return false;
                             }
@@ -567,9 +615,9 @@ namespace MTGdb
                     }
                     else
                     {
-                        foreach(Cardface cardface in card.Card_faces)
+                        foreach (Cardface cardface in card.Card_faces)
                         {
-                            if(cardface.Type_line.Contains('—'))
+                            if (cardface.Type_line.Contains('—'))
                             {
                                 if (cardface.Type_line.Substring(0, cardface.Type_line.IndexOf('—') - 1).ToLower().Equals(TypeBox.Text.ToLower()))
                                 {
@@ -587,7 +635,7 @@ namespace MTGdb
                             }
                         }
 
-                        if(!pass)
+                        if (!pass)
                         {
                             return false;
                         }
@@ -603,14 +651,14 @@ namespace MTGdb
                     {
                         if (card.Type_line.Contains('—'))
                         {
-                            if (!Regex.IsMatch(card.Type_line.Substring(0, card.Type_line.IndexOf('—') - 1).ToLower(),TypeBox.Text.ToLower()))
+                            if (!Regex.IsMatch(card.Type_line.Substring(0, card.Type_line.IndexOf('—') - 1).ToLower(), TypeBox.Text.ToLower()))
                             {
                                 return false;
                             }
                         }
                         else
                         {
-                            if (!Regex.IsMatch(card.Type_line.ToLower(),TypeBox.Text.ToLower()))
+                            if (!Regex.IsMatch(card.Type_line.ToLower(), TypeBox.Text.ToLower()))
                             {
                                 return false;
                             }
@@ -638,7 +686,7 @@ namespace MTGdb
                             }
                         }
 
-                        if(!pass)
+                        if (!pass)
                         {
                             return false;
                         }
@@ -648,11 +696,11 @@ namespace MTGdb
             }
 
             pass = false;
-            if(!String.IsNullOrEmpty(SubtypeBox.Text))
+            if (!String.IsNullOrEmpty(SubtypeBox.Text))
             {
-                if(exactsubtype)
+                if (exactsubtype)
                 {
-                    if(card.Card_faces is null)
+                    if (card.Card_faces is null)
                     {
                         if (card.Type_line.Contains('—'))
                         {
@@ -668,11 +716,11 @@ namespace MTGdb
                     }
                     else
                     {
-                        foreach(Cardface cardface in card.Card_faces)
+                        foreach (Cardface cardface in card.Card_faces)
                         {
-                            if(cardface.Type_line.Contains('—'))
+                            if (cardface.Type_line.Contains('—'))
                             {
-                                if(cardface.Type_line.Substring(cardface.Type_line.IndexOf('—') + 2, cardface.Type_line.Length - (cardface.Type_line.IndexOf('—') + 2)).ToLower().Equals(SubtypeBox.Text.ToLower()))
+                                if (cardface.Type_line.Substring(cardface.Type_line.IndexOf('—') + 2, cardface.Type_line.Length - (cardface.Type_line.IndexOf('—') + 2)).ToLower().Equals(SubtypeBox.Text.ToLower()))
                                 {
                                     pass = true;
                                     break;
@@ -680,7 +728,7 @@ namespace MTGdb
                             }
                         }
 
-                        if(!pass)
+                        if (!pass)
                         {
                             return false;
                         }
@@ -692,11 +740,11 @@ namespace MTGdb
                 }
                 else
                 {
-                    if(card.Card_faces is null)
+                    if (card.Card_faces is null)
                     {
-                        if(card.Type_line.Contains('—'))
+                        if (card.Type_line.Contains('—'))
                         {
-                            if(!Regex.IsMatch(card.Type_line.Substring(card.Type_line.IndexOf('—') + 2, card.Type_line.Length - (card.Type_line.IndexOf('—') + 2)).ToLower(), SubtypeBox.Text.ToLower()))
+                            if (!Regex.IsMatch(card.Type_line.Substring(card.Type_line.IndexOf('—') + 2, card.Type_line.Length - (card.Type_line.IndexOf('—') + 2)).ToLower(), SubtypeBox.Text.ToLower()))
                             {
                                 return false;
                             }
@@ -708,11 +756,11 @@ namespace MTGdb
                     }
                     else
                     {
-                        foreach(Cardface cardface in card.Card_faces)
+                        foreach (Cardface cardface in card.Card_faces)
                         {
                             if (cardface.Type_line.Contains('—'))
                             {
-                                if(Regex.IsMatch(cardface.Type_line.Substring(cardface.Type_line.IndexOf('—') + 2, cardface.Type_line.Length - (cardface.Type_line.IndexOf('—') + 2)).ToLower(), SubtypeBox.Text.ToLower()))
+                                if (Regex.IsMatch(cardface.Type_line.Substring(cardface.Type_line.IndexOf('—') + 2, cardface.Type_line.Length - (cardface.Type_line.IndexOf('—') + 2)).ToLower(), SubtypeBox.Text.ToLower()))
                                 {
                                     pass = true;
                                     break;
@@ -720,7 +768,7 @@ namespace MTGdb
                             }
                         }
 
-                        if(!pass)
+                        if (!pass)
                         {
                             return false;
                         }
@@ -729,72 +777,72 @@ namespace MTGdb
             }
 
             pass = false;
-            if(!String.IsNullOrEmpty(KeywordBox.Text))
+            if (!String.IsNullOrEmpty(KeywordBox.Text))
             {
-                if(exactkeyword)
+                if (exactkeyword)
                 {
-                    foreach(string keyword in card.Keywords)
+                    foreach (string keyword in card.Keywords)
                     {
-                        if(keyword.ToLower().Equals(KeywordBox.Text.ToLower()))
+                        if (keyword.ToLower().Equals(KeywordBox.Text.ToLower()))
                         {
                             pass = true;
                             break;
                         }
                     }
 
-                    if(!pass)
+                    if (!pass)
                     {
                         return false;
                     }
                 }
                 else
                 {
-                    foreach(string keyword in card.Keywords)
+                    foreach (string keyword in card.Keywords)
                     {
-                        if(Regex.IsMatch(keyword.ToLower(),KeywordBox.Text.ToLower()))
+                        if (Regex.IsMatch(keyword.ToLower(), KeywordBox.Text.ToLower()))
                         {
                             pass = true;
                             break;
                         }
                     }
 
-                    if(!pass)
+                    if (!pass)
                     {
                         return false;
                     }
                 }
             }
 
-            if(!String.IsNullOrEmpty(CMCBox.Text))
+            if (!String.IsNullOrEmpty(CMCBox.Text))
             {
-                if(!card.Cmc.Equals(CMCBox.Text + ".0"))
+                if (!card.Cmc.Equals(CMCBox.Text + ".0"))
                 {
                     return false;
                 }
             }
 
             pass = false;
-            if(!String.IsNullOrEmpty(TextBox.Text))
+            if (!String.IsNullOrEmpty(TextBox.Text))
             {
-                if(card.Card_faces is null)
+                if (card.Card_faces is null)
                 {
-                    if(String.IsNullOrEmpty(card.Oracle_text) || !Regex.IsMatch(card.Oracle_text.ToLower(), TextBox.Text))
+                    if (String.IsNullOrEmpty(card.Oracle_text) || !Regex.IsMatch(card.Oracle_text.ToLower(), TextBox.Text))
                     {
                         return false;
                     }
                 }
                 else
                 {
-                    foreach(Cardface cardface in card.Card_faces)
+                    foreach (Cardface cardface in card.Card_faces)
                     {
-                        if(!String.IsNullOrEmpty(cardface.Oracle_text) && Regex.IsMatch(cardface.Oracle_text.ToLower(), TextBox.Text))
+                        if (!String.IsNullOrEmpty(cardface.Oracle_text) && Regex.IsMatch(cardface.Oracle_text.ToLower(), TextBox.Text))
                         {
                             pass = true;
                             break;
                         }
                     }
 
-                    if(!pass)
+                    if (!pass)
                     {
                         return false;
                     }
@@ -822,5 +870,357 @@ namespace MTGdb
             System.Windows.Application.Current.Shutdown();
         }
 
+        //List stuff
+
+        private void ListDispaly_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ListBoxItem lbi = ((sender as ListBox).SelectedItem as ListBoxItem);
+
+            if(!(lbi is null))
+            {
+                string selection = lbi.Content.ToString()[0].ToString();
+
+                CardImg.Source = null;
+                CardImgF1.Source = null;
+                CardImgF2.Source = null;
+
+                cardidsincurlist.Clear();
+                ListCardDispCreate.ItemsSource = null;
+                selectedlist = null;
+
+                ListNameBox.Clear();
+                ListDescBox.Clear();
+                CardDBIDBox.Clear();
+                CardAmountBox.Clear();
+
+                CardDispCreateList.UnselectAll();
+
+                if (selection.Equals("1"))
+                {
+                    CreateSaveBtn.Content = "Save";
+                    ListCardDispCreate.Height = 219;
+                    Thickness margin = ListCardDispCreate.Margin;
+                    margin.Left = 10;
+                    margin.Top = 50;
+                    margin.Left = 10;
+                    ListCardDispCreate.Margin = margin;
+                    ListSelc.Visibility = Visibility.Visible;
+                    dispalypage = true;
+                    createlist = false;
+                    ListSelc.Items.Refresh();
+                    ListSelc.SelectedIndex = -1;
+                }
+                else if (selection.Equals("2"))
+                {
+                    CreateSaveBtn.Content = "Create";
+                    ListSelc.Visibility = Visibility.Hidden;
+                    ListCardDispCreate.Height = 259;
+                    Thickness margin = ListCardDispCreate.Margin;
+                    margin.Left = 10;
+                    margin.Top = 10;
+                    margin.Left = 10;
+                    ListCardDispCreate.Margin = margin;
+                    dispalypage = false;
+                    createlist = true;
+                }
+                else if (selection.Equals("3"))
+                {
+                    ListViewSelect.UnselectAll();
+
+                    CardViewSelet.Visibility = Visibility.Visible;
+
+                    ListViewSelect.Visibility = Visibility.Hidden;
+                    ListSelc.Visibility = Visibility.Hidden;
+                    ListCardDispCreate.Visibility = Visibility.Hidden;
+                    CardDispCreateList.Visibility = Visibility.Hidden;
+                    ListName.Visibility = Visibility.Hidden;
+                    ListNameBox.Visibility = Visibility.Hidden;
+                    ListDes.Visibility = Visibility.Hidden;
+                    ListDescBox.Visibility = Visibility.Hidden;
+                    ListCardID.Visibility = Visibility.Hidden;
+                    ListCardAmout.Visibility = Visibility.Hidden;
+                    CardDBIDBox.Visibility = Visibility.Hidden;
+                    CardAmountBox.Visibility = Visibility.Hidden;
+                    CreateSaveBtn.Visibility = Visibility.Hidden;
+                    AddCardToListBtn.Visibility = Visibility.Hidden;
+                    UpdateCardInListBtn.Visibility = Visibility.Hidden;
+                    RemoveCardListBtn.Visibility = Visibility.Hidden;
+                    DeleteListBtn.Visibility = Visibility.Hidden;
+
+                    CardDisp.Visibility = Visibility.Visible;
+                    theitemsource = CardDisp.ItemsSource;
+                    CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(theitemsource);
+                    view.Filter = MainDisplay_Filter;
+                }
+            }
+            
+
+        }
+
+        private void List_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //ListCardDisp.ItemsSource = (e.AddedItems[0] as CardList).TheList;
+
+            if(e.AddedItems.Count != 0)
+            {
+                ListCardDispCreate.ItemsSource = (e.AddedItems[0] as CardList).TheList;
+                selectedlist = e.AddedItems[0] as CardList;
+
+                ListNameBox.Text = selectedlist.Name;
+                ListDescBox.Text = selectedlist.Description;
+
+                cardidsincurlist.Clear();
+
+                foreach (CardInList cil in selectedlist.TheList)
+                {
+                    cardidsincurlist.Add(cil.TheCard.Database_id);
+                }
+            }
+
+            CardDBIDBox.Clear();
+            CardAmountBox.Clear();
+        }
+
+        private void ListCardDisp_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            CardDispCreateList.UnselectAll();
+            if (e.AddedItems.Count > 0)
+            {
+                Card selc = (e.AddedItems[0] as CardInList).TheCard;
+                if (!(selc.Image_uris is null))
+                {
+                    CardImgF1.Source = null;
+                    CardImgF2.Source = null;
+                    CardImg.Source = new BitmapImage(new Uri(selc.Image_uris["normal"]));
+                }
+                else
+                {
+                    CardImg.Source = null;
+                    CardImgF1.Source = new BitmapImage(new Uri(selc.Card_faces[0].Image_uris["normal"]));
+                    CardImgF2.Source = new BitmapImage(new Uri(selc.Card_faces[1].Image_uris["normal"]));
+                }
+            }
+        }
+
+        private void CardDispListSel_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            ListCardDispCreate.UnselectAll();
+            if (e.AddedItems.Count > 0)
+            {
+                Card selc = e.AddedItems[0] as Card;
+                if (!(selc.Image_uris is null))
+                {
+                    CardImgF1.Source = null;
+                    CardImgF2.Source = null;
+                    CardImg.Source = new BitmapImage(new Uri(selc.Image_uris["normal"]));
+                }
+                else
+                {
+                    CardImg.Source = null;
+                    CardImgF1.Source = new BitmapImage(new Uri(selc.Card_faces[0].Image_uris["normal"]));
+                    CardImgF2.Source = new BitmapImage(new Uri(selc.Card_faces[1].Image_uris["normal"]));
+                }
+            }
+            //ListBoxItem lbi = ((sender as ListBox).SelectedItem as ListBoxItem);
+            //string cardsel = lbi.Content.ToString();
+            //CardImg.Source = new BitmapImage(new Uri(Program.allcards[Convert.ToInt32(cardsel[cardsel.Length - 1].ToString())].Image_uris["normal"]));
+        }
+
+        private void CreateList_Click(object sender, RoutedEventArgs e)
+        {
+            //have seclected list stored here
+            if (selectedlist is null && createlist == false)
+            {
+                MessageBox.Show("Select List First");
+            }
+            else if (!(ListNameBox.Text is null) && ListNameBox.Text.Length > 0 && Regex.IsMatch(ListNameBox.Text + ".txt", @"^[a-zA-Z0-9](?:[a-zA-Z0-9 ._-]*[a-zA-Z0-9])?\.[a-zA-Z0-9_-]+$"))
+            {
+                if (createlist && !dispalypage)
+                {
+                    if (!(ListDescBox.Text is null))
+                    {
+                        selectedlist = new CardList(ListNameBox.Text, ListDescBox.Text);
+                        Program.cardlists.Add(selectedlist);
+                    }
+                    else
+                    {
+                        selectedlist = new CardList(ListNameBox.Text, "");
+                        Program.cardlists.Add(selectedlist);
+                    }
+                    CreateSaveBtn.Content = "Save";
+                    createlist = false;
+                    ListCardDispCreate.ItemsSource = selectedlist.TheList;
+                }
+                else
+                {
+                    selectedlist.Name = ListNameBox.Text;
+
+                    if (!(ListDescBox.Text is null))
+                    {
+                        selectedlist.Description = ListDescBox.Text;
+                    }
+
+                    if(!(ListSelc is null))
+                    {
+                        ListSelc.Items.Refresh();
+                    }
+                }
+            }
+            else
+            {
+                if (ListNameBox.Text is null || ListNameBox.Text.Length == 0)
+                {
+                    MessageBox.Show("List Name Can Not Be Empty");
+                }
+                else if (!(Regex.IsMatch(ListNameBox.Text + ".txt", @"^[a-zA-Z0-9](?:[a-zA-Z0-9 ._-]*[a-zA-Z0-9])?\.[a-zA-Z0-9_-]+$")))
+                {
+                    MessageBox.Show("List Name Is Not A Valid File Name");
+                }
+            }
+        }
+
+        private void DeleteList_Click(object sender, RoutedEventArgs e)
+        {
+            if(selectedlist is null && dispalypage)
+            {
+                MessageBox.Show("Select List First");
+            }
+            else if(selectedlist is null && !dispalypage)
+            {
+                MessageBox.Show("Create List First");
+            }
+            else
+            {
+                if(dispalypage)
+                {
+                    ListSelc.SelectedIndex = -1;
+                }
+                else
+                {
+                    createlist = true;
+                    CreateSaveBtn.Content = "Create";
+                }
+
+                ListCardDispCreate.ItemsSource = null;
+                Program.cardlists.Remove(selectedlist);
+                selectedlist = null;
+                ListNameBox.Text = "";
+                ListDescBox.Text = "";
+                CardDBIDBox.Text = "";
+                CardAmountBox.Text = "";
+                CardImg.Source = null;
+                CardImgF1.Source = null;
+                CardImgF2.Source = null;
+                ListSelc.Items.Refresh();
+            }
+        }
+
+        private bool AddUpListCheck()
+        {
+            if(selectedlist is null && dispalypage)
+            {
+                MessageBox.Show("Select List First");
+            }
+            else if (!createlist)
+            {
+                if (!(CardDBIDBox.Text is null) && !(CardAmountBox.Text is null) && Regex.IsMatch(CardDBIDBox.Text, @"^[0-9]+$") && Regex.IsMatch(CardAmountBox.Text, @"^[0-9]+$"))
+                {
+                    if (Convert.ToInt32(CardDBIDBox.Text) >= 0 && Convert.ToInt32(CardDBIDBox.Text) <= Program.allcards.Count)
+                    {
+                        if (Convert.ToInt32(CardAmountBox.Text) > 0 && Convert.ToInt32(CardAmountBox.Text) <= Program.allcards[Convert.ToInt32(CardDBIDBox.Text)].Amount)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Card Amount Is Not Valid");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Card ID Is Not Valid");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("ID And Amount Must Be Numbers");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Create List First");
+            }
+
+            return false;
+        }
+
+        private void AddToList_Click(object sender, RoutedEventArgs e)
+        {
+            if(AddUpListCheck())
+            {
+                if (cardidsincurlist.Contains(Program.allcards[Convert.ToInt32(CardDBIDBox.Text)].Database_id))
+                {
+                    MessageBox.Show("Card Already In List");
+                }
+                else
+                {
+                    selectedlist.TheList.Add(new CardInList { TheCard = Program.allcards[Convert.ToInt32(CardDBIDBox.Text)], AmountInList = Convert.ToInt32(CardAmountBox.Text) });
+                    cardidsincurlist.Add(Program.allcards[Convert.ToInt32(CardDBIDBox.Text)].Database_id);
+                    CardAmountBox.Text = "";
+                    CardDBIDBox.Text = "";
+                    ListCardDispCreate.Items.Refresh();
+                }
+            }
+        }
+
+        private void UpdateCardInList_Click(object sender, RoutedEventArgs e)
+        {
+            if(AddUpListCheck())
+            {
+                if (cardidsincurlist.Contains(Program.allcards[Convert.ToInt32(CardDBIDBox.Text)].Database_id))
+                {
+                    selectedlist.TheList[cardidsincurlist.IndexOf(Program.allcards[Convert.ToInt32(CardDBIDBox.Text)].Database_id)].AmountInList = Convert.ToInt32(CardAmountBox.Text);
+                    ListCardDispCreate.Items.Refresh();
+                }
+                else
+                {
+                    MessageBox.Show("Card Not In List");
+                }
+            }
+        }
+
+        private void RemoveCardInList_Click(object sender, RoutedEventArgs e)
+        {
+            if(AddUpListCheck())
+            {
+                if (cardidsincurlist.Contains(Program.allcards[Convert.ToInt32(CardDBIDBox.Text)].Database_id))
+                {
+                    if(selectedlist.TheList[cardidsincurlist.IndexOf(Program.allcards[Convert.ToInt32(CardDBIDBox.Text)].Database_id)].AmountInList >= Convert.ToInt32(CardAmountBox.Text))
+                    {
+                        if(selectedlist.TheList[cardidsincurlist.IndexOf(Program.allcards[Convert.ToInt32(CardDBIDBox.Text)].Database_id)].AmountInList == Convert.ToInt32(CardAmountBox.Text))
+                        {
+                            selectedlist.TheList.RemoveAt(cardidsincurlist.IndexOf(Program.allcards[Convert.ToInt32(CardDBIDBox.Text)].Database_id));
+                            cardidsincurlist.Remove(Program.allcards[Convert.ToInt32(CardDBIDBox.Text)].Database_id);
+                        }
+                        else
+                        {
+                            selectedlist.TheList[cardidsincurlist.IndexOf(Program.allcards[Convert.ToInt32(CardDBIDBox.Text)].Database_id)].AmountInList -= Convert.ToInt32(CardAmountBox.Text);
+                        }
+                        CardAmountBox.Text = "";
+                        CardDBIDBox.Text = "";
+                        ListCardDispCreate.Items.Refresh();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Card Amount Is Not Valid");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Card Not In List");
+                }
+            }
+        }
     }
 }

@@ -44,7 +44,7 @@
 
         <Grid Grid.Row="1"
               Grid.Column="0">
-            <ListBox Margin="100,0,100,0" Height="219" VerticalAlignment="Center" FontSize="20" SelectionChanged="ListBox_SelectionChanged">
+            <ListBox Margin="93,0,93,0" Height="249" VerticalAlignment="Center" FontSize="20" SelectionChanged="ListBox_SelectionChanged" Visibility="Visible" Name="CardViewSelet">
                 <!--<ListBoxItem>Search For Card(s)</ListBoxItem>-->
                 <!--<ListBoxItem>Search By Card Text</ListBoxItem>-->
                 <ListBoxItem>1 - Display All Cards</ListBoxItem>
@@ -54,9 +54,20 @@
                 <ListBoxItem>5 - Filter By CMC</ListBoxItem>
                 <ListBoxItem>6 - Filter By Keyword</ListBoxItem>
                 <ListBoxItem>7 - Display Prices</ListBoxItem>
+                <ListBoxItem>8 - Manage Lists</ListBoxItem>
                 <!--<ListBoxItem>Manage Lists</ListBoxItem>-->
                 <!--<ListBoxItem>Remove Card</ListBoxItem>-->
                 <!-- CMC, Display all, Type/subtype, color, keyword, pricing done  -->
+            </ListBox>
+
+            <!-- LIST STUFF -->
+
+            <ListBox Margin="124,0,124,0" Height="97" VerticalAlignment="Center" FontSize="20" SelectionChanged="ListDispaly_SelectionChanged" Name="ListViewSelect" Visibility="Hidden">
+                <ListBoxItem>1 - Display Lists</ListBoxItem>
+                <ListBoxItem>2 - Create List</ListBoxItem>
+                <ListBoxItem>3 - View Cards</ListBoxItem>
+                <!--  <ListBoxItem>5 - Print List to File</ListBoxItem>
+                <ListBoxItem>6 - Load List From File</ListBoxItem>-->
             </ListBox>
         </Grid>
         <Grid Grid.Column="2"
@@ -397,12 +408,106 @@
             <!--<ListBox Height="217" VerticalAlignment="Center" Name="CardDisp" SelectionChanged="CardDisp_SelectionChanged" SelectionMode="Single" HorizontalAlignment="Center" Width="280"/>-->
             <!--<TextBlock Text="NAME - SET - PRINTING - AMOUNT - ID" TextWrapping="Wrap" Margin="0,136,0,0" Foreground="White" FontFamily="Fonts/#Quicksand" FontSize="13" VerticalAlignment="Top" HorizontalAlignment="Center"/>-->
 
+            <!-- LIST STUFF -->
+
+            <!-- DISPLAY LIST STUFF -->
+            <ComboBox HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Width="380" Name="ListSelc" SelectionChanged="List_SelectionChanged" Visibility="Hidden"/>
+
+            <!-- CREATE LIST STUFF -->
+
+            <ListView Height="219" VerticalAlignment="Top" Name="ListCardDispCreate" Visibility="Hidden" Margin="10,50,10,0" FontFamily="Fonts/#Quicksand" SelectionChanged="ListCardDisp_SelectionChanged">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=TheCard.Special_name}"
+                                        Width="200">
+                            <GridViewColumn.Header>
+                                <GridViewColumnHeader Tag="Special_name" Click="CardDispColumnHeader_Click">Name</GridViewColumnHeader>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=TheCard.Set}"
+                                        Width="100">
+                            <GridViewColumn.Header>
+                                <GridViewColumnHeader Tag="Set" Click="CardDispColumnHeader_Click">Set</GridViewColumnHeader>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=TheCard.Printing}"
+                                        Width="100">
+                            <GridViewColumn.Header>
+                                <GridViewColumnHeader Tag="Printing" Click="CardDispColumnHeader_Click">Printing</GridViewColumnHeader>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=AmountInList}"
+                                        Width="100">
+                            <GridViewColumn.Header>
+                                <GridViewColumnHeader Tag="Amount" Click="CardDispColumnHeader_Click"># Of</GridViewColumnHeader>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=TheCard.Database_id}"
+                                        Width="100">
+                            <GridViewColumn.Header>
+                                <GridViewColumnHeader Tag="Database_id" Click="CardDispColumnHeader_Click">ID</GridViewColumnHeader>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <ListView Height="278" VerticalAlignment="Top" Name="CardDispCreateList" SelectionChanged="CardDispListSel_SelectionChanged" Visibility="Hidden" Margin="10,355,10,0" FontFamily="Fonts/#Quicksand">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Special_name}"
+                                        Width="200">
+                            <GridViewColumn.Header>
+                                <GridViewColumnHeader Tag="Special_name" Click="CardDispColumnHeader_Click">Name</GridViewColumnHeader>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Set}"
+                                        Width="100">
+                            <GridViewColumn.Header>
+                                <GridViewColumnHeader Tag="Set" Click="CardDispColumnHeader_Click">Set</GridViewColumnHeader>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Printing}"
+                                        Width="100">
+                            <GridViewColumn.Header>
+                                <GridViewColumnHeader Tag="Printing" Click="CardDispColumnHeader_Click">Printing</GridViewColumnHeader>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Amount}"
+                                        Width="100">
+                            <GridViewColumn.Header>
+                                <GridViewColumnHeader Tag="Amount" Click="CardDispColumnHeader_Click">Amount</GridViewColumnHeader>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Database_id}"
+                                        Width="100">
+                            <GridViewColumn.Header>
+                                <GridViewColumnHeader Tag="Database_id" Click="CardDispColumnHeader_Click">ID</GridViewColumnHeader>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <TextBlock HorizontalAlignment="Left" Height="21" Margin="46,274,0,0" Text="Name:" TextWrapping="Wrap" VerticalAlignment="Top" Width="46" FontFamily="Fonts/#Quicksand" Foreground="White" Name="ListName" Visibility="Hidden"/>
+            <TextBox HorizontalAlignment="Left" Margin="89,274,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="163" Height="21" FontFamily="Fonts/#Quicksand" Name="ListNameBox" MaxLength="50" Visibility="Hidden"/>
+            <TextBlock HorizontalAlignment="Left" Height="21" Margin="46,300,0,0" Text="Descrption:" TextWrapping="Wrap" VerticalAlignment="Top" Width="69" FontFamily="Fonts/#Quicksand" Foreground="White" Name="ListDes" Visibility="Hidden"/>
+            <TextBox HorizontalAlignment="Left" Margin="115,300,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="137" Height="21" FontFamily="Fonts/#Quicksand" x:Name="ListDescBox" MaxLength="50" Visibility="Hidden"/>
+            <TextBlock HorizontalAlignment="Left" Height="21" Margin="260,274,0,0" Text="Card ID:" TextWrapping="Wrap" VerticalAlignment="Top" Width="51" FontFamily="Fonts/#Quicksand" Foreground="White" Name="ListCardID" Visibility="Hidden"/>
+            <TextBlock HorizontalAlignment="Left" Height="21" Margin="260,300,0,0" Text="Amount:" TextWrapping="Wrap" VerticalAlignment="Top" Width="51" FontFamily="Fonts/#Quicksand" Foreground="White" Name="ListCardAmout" Visibility="Hidden"/>
+            <TextBox HorizontalAlignment="Left" Margin="316,274,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="26" Height="21" FontFamily="Fonts/#Quicksand" Name="CardDBIDBox" MaxLength="4" Visibility="Hidden"/>
+            <TextBox HorizontalAlignment="Left" Margin="316,300,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="26" Height="21" FontFamily="Fonts/#Quicksand" Name="CardAmountBox" MaxLength="3" Visibility="Hidden"/>
+            <Button Content="Save" HorizontalAlignment="Left" Margin="46,326,0,0" VerticalAlignment="Top" Width="69" Click="CreateList_Click" Name="CreateSaveBtn" Visibility="Hidden"/>
+            <Button Content="Add" HorizontalAlignment="Left" Margin="253,326,0,0" VerticalAlignment="Top" Width="32" Click="AddToList_Click" Name="AddCardToListBtn" Visibility="Hidden"/>
+            <Button Content="Update" HorizontalAlignment="Left" Margin="290,326,0,0" VerticalAlignment="Top" Width="44" Click="UpdateCardInList_Click" Name="UpdateCardInListBtn" Visibility="Hidden"/>
+            <Button Content="Remove" HorizontalAlignment="Left" Margin="339,326,0,0" VerticalAlignment="Top" Width="51" Click="RemoveCardInList_Click" Name="RemoveCardListBtn" Visibility="Hidden"/>
+            <Button Content="Delete" HorizontalAlignment="Left" Margin="120,326,0,0" VerticalAlignment="Top" Width="69" Click="DeleteList_Click" Name="DeleteListBtn" Visibility="Hidden" Background="Red" Foreground="White"/>
+
         </Grid>
-        <Grid Grid.Column="1"
-              Grid.Row="1" Grid.ColumnSpan="2" Margin="266,0,0,0">
-            <Image Name="CardImg" Margin="137,112,30,112"/>
-            <Image Name="CardImgF1" Margin="137,8,30,416"/>
-            <Image Name="CardImgF2" Margin="137,410,30,8"/>
+        <Grid Grid.Column="2"
+              Grid.Row="1">
+            <Image Name="CardImg" Margin="40,112,30,112"/>
+            <Image Name="CardImgF1" Margin="84,8,30,416"/>
+            <Image Name="CardImgF2" Margin="84,410,30,8"/>
 
         </Grid>
     </Grid>
