@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Text.RegularExpressions;
 using System.Collections;
+using System.IO;
 
 namespace MTGdb
 {
@@ -35,6 +36,9 @@ namespace MTGdb
         private CardList selectedlist;
         private bool createlist = false;
         private bool dispalypage = true;
+        private string filedir = Directory.GetCurrentDirectory() + "\\Files";
+        private List<LoadableFile> loadablefilepaths = new List<LoadableFile>();
+        private string selectedloadablefile = "";
         public MainWindow()
         {
             Program.Start();
@@ -61,6 +65,7 @@ namespace MTGdb
             //list stuff
             ListSelc.ItemsSource = Program.cardlists;
             CardDispCreateList.ItemsSource = Program.allcards;
+            LoadListSelc.ItemsSource = loadablefilepaths;
 
             //theitemsource = CardDispCreateList.ItemsSource;
             //CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(theitemsource);
@@ -895,6 +900,56 @@ namespace MTGdb
 
                 CardDispCreateList.UnselectAll();
 
+                ListName.Visibility = Visibility.Visible;
+                ListNameBox.Visibility = Visibility.Visible;
+                ListDes.Visibility = Visibility.Visible;
+                ListDescBox.Visibility = Visibility.Visible;
+                ListCardID.Visibility = Visibility.Visible;
+                ListCardAmout.Visibility = Visibility.Visible;
+                CardDBIDBox.Visibility = Visibility.Visible;
+                CardAmountBox.Visibility = Visibility.Visible;
+                CreateSaveBtn.Visibility = Visibility.Visible;
+                AddCardToListBtn.Visibility = Visibility.Visible;
+                UpdateCardInListBtn.Visibility = Visibility.Visible;
+                RemoveCardListBtn.Visibility = Visibility.Visible;
+                DeleteListBtn.Visibility = Visibility.Visible;
+                ListCardDispCreate.Visibility = Visibility.Visible;
+
+                ArchTapBtn.Visibility = Visibility.Hidden;
+                StarKingBtn.Visibility = Visibility.Hidden;
+                TCGPBtn.Visibility = Visibility.Hidden;
+                LoadBtn.Visibility = Visibility.Hidden;
+
+                LoadListSelc.Visibility = Visibility.Hidden;
+                LoadListBtn.Visibility = Visibility.Hidden;
+                LoadListTextBox.Visibility = Visibility.Hidden;
+
+                selectedloadablefile = "";
+
+                //WBox.Visibility = Visibility.Visible;
+                //UBox.Visibility = Visibility.Visible;
+                //BBox.Visibility = Visibility.Visible;
+                //RBox.Visibility = Visibility.Visible;
+                //GBox.Visibility = Visibility.Visible;
+                //CBox.Visibility = Visibility.Visible;
+                //CardNameBox.Visibility = Visibility.Visible;
+                //ExactOne.Visibility = Visibility.Visible;
+                //TypeBox.Visibility = Visibility.Visible;
+                //ExactTwo.Visibility = Visibility.Visible;
+                //CardNameTxt.Visibility = Visibility.Visible;
+                //FilterLable.Visibility = Visibility.Visible;
+                //SubtypeBox.Visibility = Visibility.Visible;
+                //SubtypeTxt.Visibility = Visibility.Visible;
+                //ExactThree.Visibility = Visibility.Visible;
+                //KeywordBox.Visibility = Visibility.Visible;
+                //KeywordTxt.Visibility = Visibility.Visible;
+                //ExactFour.Visibility = Visibility.Visible;
+                //CMCBox.Visibility = Visibility.Visible;
+                //CMCTxt.Visibility = Visibility.Visible;
+                //TextBox.Visibility = Visibility.Visible;
+                //CardTextTxt.Visibility = Visibility.Visible;
+                //HasBox.Visibility = Visibility.Visible;
+
                 if (selection.Equals("1"))
                 {
                     CreateSaveBtn.Content = "Save";
@@ -924,6 +979,101 @@ namespace MTGdb
                     createlist = true;
                 }
                 else if (selection.Equals("3"))
+                {
+                    //WBox.Visibility = Visibility.Hidden;
+                    //UBox.Visibility = Visibility.Hidden;
+                    //BBox.Visibility = Visibility.Hidden;
+                    //RBox.Visibility = Visibility.Hidden;
+                    //GBox.Visibility = Visibility.Hidden;
+                    //CBox.Visibility = Visibility.Hidden;
+                    //CardNameBox.Visibility = Visibility.Hidden;
+                    //ExactOne.Visibility = Visibility.Hidden;
+                    //TypeBox.Visibility = Visibility.Hidden;
+                    //ExactTwo.Visibility = Visibility.Hidden;
+                    //CardNameTxt.Visibility = Visibility.Hidden;
+                    //FilterLable.Visibility = Visibility.Hidden;
+                    //SubtypeBox.Visibility = Visibility.Hidden;
+                    //SubtypeTxt.Visibility = Visibility.Hidden;
+                    //ExactThree.Visibility = Visibility.Hidden;
+                    //KeywordBox.Visibility = Visibility.Hidden;
+                    //KeywordTxt.Visibility = Visibility.Hidden;
+                    //ExactFour.Visibility = Visibility.Hidden;
+                    //CMCBox.Visibility = Visibility.Hidden;
+                    //CMCTxt.Visibility = Visibility.Hidden;
+                    //TextBox.Visibility = Visibility.Hidden;
+                    //CardTextTxt.Visibility = Visibility.Hidden;
+                    //HasBox.Visibility = Visibility.Hidden;
+
+                    ListName.Visibility = Visibility.Hidden;
+                    ListNameBox.Visibility = Visibility.Hidden;
+                    ListDes.Visibility = Visibility.Hidden;
+                    ListDescBox.Visibility = Visibility.Hidden;
+                    ListCardID.Visibility = Visibility.Hidden;
+                    ListCardAmout.Visibility = Visibility.Hidden;
+                    CardDBIDBox.Visibility = Visibility.Hidden;
+                    CardAmountBox.Visibility = Visibility.Hidden;
+                    CreateSaveBtn.Visibility = Visibility.Hidden;
+                    AddCardToListBtn.Visibility = Visibility.Hidden;
+                    UpdateCardInListBtn.Visibility = Visibility.Hidden;
+                    RemoveCardListBtn.Visibility = Visibility.Hidden;
+                    DeleteListBtn.Visibility = Visibility.Hidden;
+
+                    ArchTapBtn.Visibility = Visibility.Visible;
+                    StarKingBtn.Visibility = Visibility.Visible;
+                    TCGPBtn.Visibility = Visibility.Visible;
+                    LoadBtn.Visibility = Visibility.Visible;
+
+                    ListCardDispCreate.Height = 219;
+                    Thickness margin = ListCardDispCreate.Margin;
+                    margin.Left = 10;
+                    margin.Top = 50;
+                    margin.Left = 10;
+                    ListCardDispCreate.Margin = margin;
+                    ListSelc.Visibility = Visibility.Visible;
+                    createlist = false;
+                    ListSelc.Items.Refresh();
+                    ListSelc.SelectedIndex = -1;
+
+                }
+                else if (selection.Equals("4"))
+                {
+                    string[] files = Directory.GetFiles(filedir);
+                    loadablefilepaths.Clear();
+                    foreach (string file in files)
+                    {
+                        string filename = System.IO.Path.GetFileName(file);
+
+                        if (filename.Contains("Load.txt"))
+                        {
+                            loadablefilepaths.Add(new LoadableFile(file));
+                        }
+                    }
+
+                    ListName.Visibility = Visibility.Hidden;
+                    ListNameBox.Visibility = Visibility.Hidden;
+                    ListDes.Visibility = Visibility.Hidden;
+                    ListDescBox.Visibility = Visibility.Hidden;
+                    ListCardID.Visibility = Visibility.Hidden;
+                    ListCardAmout.Visibility = Visibility.Hidden;
+                    CardDBIDBox.Visibility = Visibility.Hidden;
+                    CardAmountBox.Visibility = Visibility.Hidden;
+                    CreateSaveBtn.Visibility = Visibility.Hidden;
+                    AddCardToListBtn.Visibility = Visibility.Hidden;
+                    UpdateCardInListBtn.Visibility = Visibility.Hidden;
+                    RemoveCardListBtn.Visibility = Visibility.Hidden;
+                    DeleteListBtn.Visibility = Visibility.Hidden;
+                    ListSelc.Visibility = Visibility.Hidden;
+                    ListCardDispCreate.Visibility = Visibility.Hidden;
+
+                    LoadListSelc.Visibility = Visibility.Visible;
+                    LoadListBtn.Visibility = Visibility.Visible;
+                    LoadListTextBox.Visibility = Visibility.Visible;
+
+                    LoadListSelc.Items.Refresh();
+                    LoadListSelc.SelectedIndex = -1;
+                    LoadListTextBox.Text = "";
+                }
+                else if (selection.Equals("5"))
                 {
                     ListViewSelect.UnselectAll();
 
@@ -1220,6 +1370,256 @@ namespace MTGdb
                 {
                     MessageBox.Show("Card Not In List");
                 }
+            }
+        }
+
+        private void ArchTap_Click(object sender, RoutedEventArgs e)
+        {
+            if(selectedlist is null)
+            {
+                MessageBox.Show("Select List First");
+            }
+            else
+            {
+                string docpath = Environment.CurrentDirectory + "\\Files";
+                using (StreamWriter outputFile = new StreamWriter(System.IO.Path.Combine(docpath, selectedlist.Name + "DeckBuild.txt"), false))
+                {
+                    outputFile.WriteLine("Name: " + selectedlist.Name);
+                    outputFile.WriteLine("");
+                    outputFile.WriteLine("Description: " + selectedlist.Description);
+                    outputFile.WriteLine("");
+                    outputFile.WriteLine("");
+                    List<CardInList> cardsinlist = selectedlist.TheList;
+                    foreach(CardInList cil in cardsinlist)
+                    {
+                        outputFile.WriteLine(cil.AmountInList + "x " + cil.TheCard.Name + " (" + cil.TheCard.Set + ")");
+                    }
+                }
+
+                MessageBox.Show("Archidekt/Tappedout File Printed to 'Files' Directory");
+            }
+        }
+
+        private void StrCitCrdKin_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedlist is null)
+            {
+                MessageBox.Show("Select List First");
+            }
+            else
+            {
+                string docpath = Environment.CurrentDirectory + "\\Files";
+                using (StreamWriter outputFile = new StreamWriter(System.IO.Path.Combine(docpath, selectedlist.Name + "StarKingdom.txt"), false))
+                {
+                    outputFile.WriteLine("Name: " + selectedlist.Name);
+                    outputFile.WriteLine("");
+                    outputFile.WriteLine("Description: " + selectedlist.Description);
+                    outputFile.WriteLine("");
+                    outputFile.WriteLine("");
+                    List<CardInList> cardsinlist = selectedlist.TheList;
+                    foreach (CardInList cil in cardsinlist)
+                    {
+                        outputFile.WriteLine(cil.AmountInList + "x " + cil.TheCard.Name);
+                    }
+                }
+
+                MessageBox.Show("StarCity/CardKingdom File Printed to 'Files' Directory");
+            }
+        }
+
+        private void TCGP_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedlist is null)
+            {
+                MessageBox.Show("Select List First");
+            }
+            else
+            {
+                string docpath = Environment.CurrentDirectory + "\\Files";
+                using (StreamWriter outputFile = new StreamWriter(System.IO.Path.Combine(docpath, selectedlist.Name + "TCGPlayer.txt"), false))
+                {
+                    outputFile.WriteLine("Name: " + selectedlist.Name);
+                    outputFile.WriteLine("");
+                    outputFile.WriteLine("Description: " + selectedlist.Description);
+                    outputFile.WriteLine("");
+                    outputFile.WriteLine("");
+                    List<CardInList> cardsinlist = selectedlist.TheList;
+                    foreach (CardInList cil in cardsinlist)
+                    {
+                        outputFile.WriteLine(cil.AmountInList + "x " + cil.TheCard.Name + " [" + cil.TheCard.Set + "]");
+                    }
+                }
+
+                MessageBox.Show("TCGPlayer File Printed to 'Files' Directory");
+            }
+        }
+
+        private void Loadable_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedlist is null)
+            {
+                MessageBox.Show("Select List First");
+            }
+            else
+            {
+                string docpath = Environment.CurrentDirectory + "\\Files";
+                using (StreamWriter outputFile = new StreamWriter(System.IO.Path.Combine(docpath, selectedlist.Name + "Load.txt"), false))
+                {
+                    outputFile.WriteLine(selectedlist.Name);
+                    outputFile.WriteLine(selectedlist.Description);
+                    List<CardInList> cardsinlist = selectedlist.TheList;
+                    foreach (CardInList cil in cardsinlist)
+                    {
+                        outputFile.WriteLine(cil.TheCard.Name + "_" + cil.TheCard.Set + "_" + cil.TheCard.Collector_number + "_" + cil.TheCard.Printing + "_" + cil.AmountInList);
+                    }
+                }
+
+                MessageBox.Show("Loadable File Printed to 'Files' Directory");
+            }
+        }
+
+        private void LoadList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            if (e.AddedItems.Count != 0)
+            {
+                selectedloadablefile = (e.AddedItems[0] as LoadableFile).Path;
+               
+            }
+
+        }
+
+        private void LoadFile_Click(object sender, RoutedEventArgs e)
+        {
+            if(selectedloadablefile.Equals(""))
+            {
+                MessageBox.Show("Select List First");
+            }
+            else
+            {
+                string[] lines = System.IO.File.ReadAllLines(selectedloadablefile);
+                CardList loadlist = new CardList(lines[0],lines[1]);
+                LoadListTextBox.Text = "";
+                for (int i = 2; i < lines.Length; i++)
+                {
+                    string[] cardelements = lines[i].Split("_");
+                    string cardname = cardelements[0];
+                    string cardset = cardelements[1];
+                    string cardcolnum = cardelements[2];
+                    string cardprint = cardelements[3];
+                    string cardnum = cardelements[4];
+                    int min = 0;
+                    int max = Program.allcards.Count - 1;
+                    int index = 0;
+                    bool found = false;
+                    Card card = null;
+                    bool canload = false;
+                    while (min <= max)
+                    {
+                        int mid = (min + max) / 2;
+                        if (cardname.Equals(Program.allcards[mid].Name))
+                        {
+                            index = mid;
+                            if (cardset.Equals(Program.allcards[mid].Set) && cardcolnum.Equals(Program.allcards[mid].Collector_number) && cardprint.Equals(Program.allcards[mid].Printing))
+                            {
+                                card = Program.allcards[mid];
+                                found = true;
+                                break;
+                            }
+                            else
+                            {
+                                for (int j = index + 1; j < Program.allcards.Count; j++)
+                                {
+                                    if (cardname.Equals(Program.allcards[j].Name))
+                                    {
+                                        if (cardset.Equals(Program.allcards[j].Set) && cardcolnum.Equals(Program.allcards[j].Collector_number) && cardprint.Equals(Program.allcards[j].Printing))
+                                        {
+                                            card = Program.allcards[j];
+                                            found = true;
+                                            break;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }
+                                }
+                                if (found)
+                                {
+                                    break;
+                                }
+                                for (int j = index - 1; j >= 0; j--)
+                                {
+                                    if (cardname.Equals(Program.allcards[j].Name))
+                                    {
+                                        if (cardset.Equals(Program.allcards[j].Set) && cardcolnum.Equals(Program.allcards[j].Collector_number) && cardprint.Equals(Program.allcards[j].Printing))
+                                        {
+                                            card = Program.allcards[j];
+                                            found = true;
+                                            break;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                        else if (cardname.CompareTo(Program.allcards[mid].Name) < 0)
+                        {
+                            max = mid - 1;
+                        }
+                        else
+                        {
+                            min = mid + 1;
+                        }
+                    }
+
+                    if (found)
+                    {
+                        if (Convert.ToInt32(cardnum) > card.Amount)
+                        {
+                            //card in load is greater amount then card in db
+                            if (MessageBox.Show(card.Special_name + " Has More In The List" + " (" + cardnum + ")" + " Then In The Database (" + card.Amount + ")." + Environment.NewLine + "Skip Loading Card or Cancel Load", "Load Error", MessageBoxButton.OKCancel) == MessageBoxResult.Cancel)
+                            {
+                                //cancel load
+                                canload = true;
+                            }
+                        }
+                        else
+                        {
+                            //card fine
+                            if(LoadListTextBox.Text.Equals(""))
+                            {
+                                LoadListTextBox.Text = card.Special_name + " Loaded";
+                            }
+                            else
+                            {
+                                LoadListTextBox.Text = LoadListTextBox.Text + Environment.NewLine + card.Special_name + " Loaded";
+                            }
+                            loadlist.TheList.Add(new CardInList { TheCard = card, AmountInList = Convert.ToInt32(cardnum) });
+                            loadlist.NumOfCard.Add(Convert.ToInt32(cardnum));
+                        }
+                    }
+                    else
+                    {
+                        //card not in db
+                        if (MessageBox.Show(cardname + " Is Not In The Database." + Environment.NewLine +"Skip Loading Card or Cancel Load", "Confirmation", MessageBoxButton.OKCancel) == MessageBoxResult.Cancel)
+                        {
+                            canload = true;
+                        }
+                    }
+
+                    if (canload)
+                    {
+                        LoadListTextBox.Text = "";
+                        return;
+                    }
+                }
+                LoadListTextBox.Text = "List Loaded" + Environment.NewLine + LoadListTextBox.Text;
+                Program.cardlists.Add(loadlist);
             }
         }
     }

@@ -62,10 +62,12 @@
 
             <!-- LIST STUFF -->
 
-            <ListBox Margin="124,0,124,0" Height="97" VerticalAlignment="Center" FontSize="20" SelectionChanged="ListDispaly_SelectionChanged" Name="ListViewSelect" Visibility="Hidden">
+            <ListBox Margin="116,0,116,0" Height="159" VerticalAlignment="Center" FontSize="20" SelectionChanged="ListDispaly_SelectionChanged" Name="ListViewSelect" Visibility="Hidden">
                 <ListBoxItem>1 - Display Lists</ListBoxItem>
                 <ListBoxItem>2 - Create List</ListBoxItem>
-                <ListBoxItem>3 - View Cards</ListBoxItem>
+                <ListBoxItem>3 - Print List</ListBoxItem>
+                <ListBoxItem>4 - Load List</ListBoxItem>
+                <ListBoxItem>5- View Cards</ListBoxItem>
                 <!--  <ListBoxItem>5 - Print List to File</ListBoxItem>
                 <ListBoxItem>6 - Load List From File</ListBoxItem>-->
             </ListBox>
@@ -382,29 +384,29 @@
                     </GroupStyle>
                 </ListView.GroupStyle>
             </ListView>
-            <CheckBox Content="W" HorizontalAlignment="Left" Margin="73,638,0,0" VerticalAlignment="Top" FontFamily="Fonts/#Quicksand" Foreground="White" Checked="W_CheckedEvent" Unchecked="W_UncheckedEvent"/>
-            <CheckBox Content="U" HorizontalAlignment="Left" Margin="109,638,0,0" VerticalAlignment="Top" FontFamily="Fonts/#Quicksand" Foreground="White" Checked="U_CheckedEvent" Unchecked="U_UncheckedEvent"/>
-            <CheckBox Content="B" HorizontalAlignment="Left" Margin="142,638,0,0" VerticalAlignment="Top" FontFamily="Fonts/#Quicksand" Foreground="White" Checked="B_CheckedEvent" Unchecked="B_UncheckedEvent"/>
-            <CheckBox Content="R" HorizontalAlignment="Left" Margin="174,638,0,0" VerticalAlignment="Top" FontFamily="Fonts/#Quicksand" Foreground="White" Checked="R_CheckedEvent" Unchecked="R_UncheckedEvent"/>
-            <CheckBox Content="G" HorizontalAlignment="Left" Margin="206,638,0,0" VerticalAlignment="Top" FontFamily="Fonts/#Quicksand" Foreground="White" Checked="G_CheckedEvent" Unchecked="G_UncheckedEvent"/>
-            <CheckBox Content="C" HorizontalAlignment="Left" Margin="239,638,0,0" VerticalAlignment="Top" FontFamily="Fonts/#Quicksand" Foreground="White" Checked="C_CheckedEvent" Unchecked="C_UncheckedEvent"/>
-            <TextBox HorizontalAlignment="Left" Height="19" Margin="90,670,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" FontFamily="Fonts/#Quicksand" Name="CardNameBox" TextChanged="CardName_Textchanged"/>
-            <CheckBox Content="Exact" HorizontalAlignment="Left" Margin="295,672,0,0" VerticalAlignment="Top" FontFamily="Fonts/#Quicksand" Foreground="White" Checked="ExactCardName_CheckedEvent" Unchecked="ExactCardName_UncheckedEvent"/>
-            <TextBox HorizontalAlignment="Left" Height="19" Margin="90,694,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" FontFamily="Fonts/#Quicksand" Name="TypeBox" TextChanged="Type_Textchanged"/>
-            <CheckBox Content="Exact" HorizontalAlignment="Left" Margin="295,696,0,0" VerticalAlignment="Top" FontFamily="Fonts/#Quicksand" Foreground="White" Checked="ExactType_CheckedEvent" Unchecked="ExactType_UncheckedEvent"/>
-            <TextBlock HorizontalAlignment="Left" Height="17" Margin="21,670,0,0" Text="Card Name:" TextWrapping="Wrap" VerticalAlignment="Top" Width="69" FontFamily="Fonts/#Quicksand" Foreground="White"/>
-            <TextBlock HorizontalAlignment="Left" Height="17" Margin="21,695,0,0" Text="Type:" TextWrapping="Wrap" VerticalAlignment="Top" Width="69" FontFamily="Fonts/#Quicksand" Foreground="White" Name="FilterLable"/>
-            <TextBox HorizontalAlignment="Left" Height="19" Margin="90,718,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" FontFamily="Fonts/#Quicksand" Name="SubtypeBox" TextChanged="Subtype_Textchanged"/>
-            <TextBlock HorizontalAlignment="Left" Height="17" Margin="21,719,0,0" Text="Subtype:" TextWrapping="Wrap" VerticalAlignment="Top" Width="69" FontFamily="Fonts/#Quicksand" Foreground="White"/>
-            <CheckBox Content="Exact" HorizontalAlignment="Left" Margin="295,720,0,0" VerticalAlignment="Top" FontFamily="Fonts/#Quicksand" Foreground="White" Checked="ExactSubtype_CheckedEvent" Unchecked="ExactSubtype_UncheckedEvent"/>
-            <TextBox HorizontalAlignment="Left" Height="19" Margin="90,742,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" FontFamily="Fonts/#Quicksand" Name="KeywordBox" TextChanged="Keyword_Textchanged"/>
-            <TextBlock HorizontalAlignment="Left" Height="17" Margin="21,743,0,0" Text="Keyword:" TextWrapping="Wrap" VerticalAlignment="Top" Width="69" FontFamily="Fonts/#Quicksand" Foreground="White"/>
-            <CheckBox Content="Exact" HorizontalAlignment="Left" Margin="295,744,0,0" VerticalAlignment="Top" FontFamily="Fonts/#Quicksand" Foreground="White" Checked="ExactKeyword_CheckedEvent" Unchecked="ExactKeyword_UncheckedEvent"/>
-            <TextBox HorizontalAlignment="Left" Height="19" Margin="90,766,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" FontFamily="Fonts/#Quicksand" Name="CMCBox" TextChanged="CMC_Textchanged"/>
-            <TextBlock HorizontalAlignment="Left" Height="17" Margin="21,767,0,0" Text="CMC:" TextWrapping="Wrap" VerticalAlignment="Top" Width="69" FontFamily="Fonts/#Quicksand" Foreground="White"/>
-            <TextBox HorizontalAlignment="Left" Height="19" Margin="90,790,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" FontFamily="Fonts/#Quicksand" Name="TextBox" TextChanged="Textbox_Textchanged"/>
-            <TextBlock HorizontalAlignment="Left" Height="17" Margin="21,791,0,0" Text="Text Box:" TextWrapping="Wrap" VerticalAlignment="Top" Width="69" FontFamily="Fonts/#Quicksand" Foreground="White"/>
-            <CheckBox Content="Has" HorizontalAlignment="Left" Margin="272,638,0,0" VerticalAlignment="Top" FontFamily="Fonts/#Quicksand" Foreground="White" Checked="Contains_CheckedEvent" Unchecked="Contains_UncheckedEvent"/>
+            <CheckBox Content="W" HorizontalAlignment="Left" Margin="73,638,0,0" VerticalAlignment="Top" FontFamily="Fonts/#Quicksand" Foreground="White" Checked="W_CheckedEvent" Unchecked="W_UncheckedEvent" Name="WBox" Visibility="Visible"/>
+            <CheckBox Content="U" HorizontalAlignment="Left" Margin="109,638,0,0" VerticalAlignment="Top" FontFamily="Fonts/#Quicksand" Foreground="White" Checked="U_CheckedEvent" Unchecked="U_UncheckedEvent" Name="UBox" Visibility="Visible"/>
+            <CheckBox Content="B" HorizontalAlignment="Left" Margin="142,638,0,0" VerticalAlignment="Top" FontFamily="Fonts/#Quicksand" Foreground="White" Checked="B_CheckedEvent" Unchecked="B_UncheckedEvent" Name="BBox" Visibility="Visible"/>
+            <CheckBox Content="R" HorizontalAlignment="Left" Margin="174,638,0,0" VerticalAlignment="Top" FontFamily="Fonts/#Quicksand" Foreground="White" Checked="R_CheckedEvent" Unchecked="R_UncheckedEvent" Name="RBox" Visibility="Visible"/>
+            <CheckBox Content="G" HorizontalAlignment="Left" Margin="206,638,0,0" VerticalAlignment="Top" FontFamily="Fonts/#Quicksand" Foreground="White" Checked="G_CheckedEvent" Unchecked="G_UncheckedEvent" Name="GBox" Visibility="Visible"/>
+            <CheckBox Content="C" HorizontalAlignment="Left" Margin="239,638,0,0" VerticalAlignment="Top" FontFamily="Fonts/#Quicksand" Foreground="White" Checked="C_CheckedEvent" Unchecked="C_UncheckedEvent" Name="CBox" Visibility="Visible"/>
+            <TextBox HorizontalAlignment="Left" Height="19" Margin="90,670,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" FontFamily="Fonts/#Quicksand" Name="CardNameBox" TextChanged="CardName_Textchanged" Visibility="Visible"/>
+            <CheckBox Content="Exact" HorizontalAlignment="Left" Margin="295,672,0,0" VerticalAlignment="Top" FontFamily="Fonts/#Quicksand" Foreground="White" Checked="ExactCardName_CheckedEvent" Unchecked="ExactCardName_UncheckedEvent" Name="ExactOne" Visibility="Visible"/>
+            <TextBox HorizontalAlignment="Left" Height="19" Margin="90,694,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" FontFamily="Fonts/#Quicksand" Name="TypeBox" TextChanged="Type_Textchanged" Visibility="Visible"/>
+            <CheckBox Content="Exact" HorizontalAlignment="Left" Margin="295,696,0,0" VerticalAlignment="Top" FontFamily="Fonts/#Quicksand" Foreground="White" Checked="ExactType_CheckedEvent" Unchecked="ExactType_UncheckedEvent" Name="ExactTwo" Visibility="Visible"/>
+            <TextBlock HorizontalAlignment="Left" Height="17" Margin="21,670,0,0" Text="Card Name:" TextWrapping="Wrap" VerticalAlignment="Top" Width="69" FontFamily="Fonts/#Quicksand" Foreground="White" Name="CardNameTxt" Visibility="Visible"/>
+            <TextBlock HorizontalAlignment="Left" Height="17" Margin="21,695,0,0" Text="Type:" TextWrapping="Wrap" VerticalAlignment="Top" Width="69" FontFamily="Fonts/#Quicksand" Foreground="White" Name="FilterLable" Visibility="Visible"/>
+            <TextBox HorizontalAlignment="Left" Height="19" Margin="90,718,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" FontFamily="Fonts/#Quicksand" Name="SubtypeBox" TextChanged="Subtype_Textchanged" Visibility="Visible"/>
+            <TextBlock HorizontalAlignment="Left" Height="17" Margin="21,719,0,0" Text="Subtype:" TextWrapping="Wrap" VerticalAlignment="Top" Width="69" FontFamily="Fonts/#Quicksand" Foreground="White" Name="SubtypeTxt" Visibility="Visible"/>
+            <CheckBox Content="Exact" HorizontalAlignment="Left" Margin="295,720,0,0" VerticalAlignment="Top" FontFamily="Fonts/#Quicksand" Foreground="White" Checked="ExactSubtype_CheckedEvent" Unchecked="ExactSubtype_UncheckedEvent" Name="ExactThree" Visibility="Visible"/>
+            <TextBox HorizontalAlignment="Left" Height="19" Margin="90,742,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" FontFamily="Fonts/#Quicksand" Name="KeywordBox" TextChanged="Keyword_Textchanged" Visibility="Visible"/>
+            <TextBlock HorizontalAlignment="Left" Height="17" Margin="21,743,0,0" Text="Keyword:" TextWrapping="Wrap" VerticalAlignment="Top" Width="69" FontFamily="Fonts/#Quicksand" Foreground="White" Name="KeywordTxt" Visibility="Visible"/>
+            <CheckBox Content="Exact" HorizontalAlignment="Left" Margin="295,744,0,0" VerticalAlignment="Top" FontFamily="Fonts/#Quicksand" Foreground="White" Checked="ExactKeyword_CheckedEvent" Unchecked="ExactKeyword_UncheckedEvent" Name="ExactFour" Visibility="Visible"/>
+            <TextBox HorizontalAlignment="Left" Height="19" Margin="90,766,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" FontFamily="Fonts/#Quicksand" Name="CMCBox" TextChanged="CMC_Textchanged" Visibility="Visible"/>
+            <TextBlock HorizontalAlignment="Left" Height="17" Margin="21,767,0,0" Text="CMC:" TextWrapping="Wrap" VerticalAlignment="Top" Width="69" FontFamily="Fonts/#Quicksand" Foreground="White" Name="CMCTxt" Visibility="Visible"/>
+            <TextBox HorizontalAlignment="Left" Height="19" Margin="90,790,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" FontFamily="Fonts/#Quicksand" Name="TextBox" TextChanged="Textbox_Textchanged" Visibility="Visible"/>
+            <TextBlock HorizontalAlignment="Left" Height="17" Margin="21,791,0,0" Text="Text Box:" TextWrapping="Wrap" VerticalAlignment="Top" Width="69" FontFamily="Fonts/#Quicksand" Foreground="White" Name="CardTextTxt" Visibility="Visible"/>
+            <CheckBox Content="Has" HorizontalAlignment="Left" Margin="272,638,0,0" VerticalAlignment="Top" FontFamily="Fonts/#Quicksand" Foreground="White" Checked="Contains_CheckedEvent" Unchecked="Contains_UncheckedEvent" Name="HasBox" Visibility="Visible"/>
             <!--<ListBox Height="217" VerticalAlignment="Center" Name="CardDisp" SelectionChanged="CardDisp_SelectionChanged" SelectionMode="Single" HorizontalAlignment="Center" Width="280"/>-->
             <!--<TextBlock Text="NAME - SET - PRINTING - AMOUNT - ID" TextWrapping="Wrap" Margin="0,136,0,0" Foreground="White" FontFamily="Fonts/#Quicksand" FontSize="13" VerticalAlignment="Top" HorizontalAlignment="Center"/>-->
 
@@ -501,6 +503,19 @@
             <Button Content="Update" HorizontalAlignment="Left" Margin="290,326,0,0" VerticalAlignment="Top" Width="44" Click="UpdateCardInList_Click" Name="UpdateCardInListBtn" Visibility="Hidden"/>
             <Button Content="Remove" HorizontalAlignment="Left" Margin="339,326,0,0" VerticalAlignment="Top" Width="51" Click="RemoveCardInList_Click" Name="RemoveCardListBtn" Visibility="Hidden"/>
             <Button Content="Delete" HorizontalAlignment="Left" Margin="120,326,0,0" VerticalAlignment="Top" Width="69" Click="DeleteList_Click" Name="DeleteListBtn" Visibility="Hidden" Background="Red" Foreground="White"/>
+            <!-- PRINT LIST BTNS -->
+            <Button Content="Archidekt/Tappedout" HorizontalAlignment="Left" Margin="10,274,0,0" VerticalAlignment="Top" FontFamily="Fonts/#Quicksand" Click="ArchTap_Click" Name="ArchTapBtn" Visibility="Hidden"/>
+            <Button Content="StarCity/CardKingdom" HorizontalAlignment="Center" Margin="0,274,0,0" VerticalAlignment="Top" FontFamily="Fonts/#Quicksand" Click="StrCitCrdKin_Click" Name="StarKingBtn" Visibility="Hidden"/>
+            <Button Content="TCGPlayer" HorizontalAlignment="Left" Margin="269,274,0,0" VerticalAlignment="Top" FontFamily="Fonts/#Quicksand" Click="TCGP_Click" Name="TCGPBtn" Visibility="Hidden"/>
+            <Button Content="Loadable" HorizontalAlignment="Left" Margin="334,274,0,0" VerticalAlignment="Top" FontFamily="Fonts/#Quicksand" Click="Loadable_Click" Name="LoadBtn" Visibility="Hidden"/>
+
+
+            <!--List Load-->
+            <ComboBox HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Width="380" Name="LoadListSelc" SelectionChanged="LoadList_SelectionChanged" Visibility="Hidden"/>
+            <Button Content="Load" HorizontalAlignment="Center" Margin="0,49,0,0" VerticalAlignment="Top" FontFamily="Fonts/#Quicksand" Width="44" FontSize="15" Name="LoadListBtn" Click="LoadFile_Click" Visibility="Hidden"/>
+            <TextBox HorizontalAlignment="Center" Height="143" Margin="0,88,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="380" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" Name="LoadListTextBox" Visibility="Hidden"/>
+
+                <!-- https://stackoverflow.com/questions/1192335/automatic-vertical-scroll-bar-in-wpf-textblock-->
 
         </Grid>
         <Grid Grid.Column="2"
