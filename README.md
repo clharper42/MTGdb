@@ -1,5 +1,5 @@
 # MTGdb
-A visualtion of my other MTGdb using WPF
+A visualtion of my other [MTGdb](https://github.com/clharper42/MTG-Personal-Database) using WPF
 
 This program is a way to create and interact with your personal Magic The Gathering card collection.
 
