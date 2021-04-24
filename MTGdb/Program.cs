@@ -20,6 +20,7 @@ namespace MTGdb
         public static List<CardWithFilter> cardsbytype = new List<CardWithFilter>();
         public static List<CardWithFilter> cardsbysubtype = new List<CardWithFilter>();
         public static List<CardWithFilter> cardsbykeyword = new List<CardWithFilter>();
+        public static List<List<CardWithFilter>> alllistofcardsbyfilter = new List<List<CardWithFilter>> { cardsbytype, cardsbysubtype, cardsbykeyword };
         public static List<CardList> cardlists = new List<CardList>();
         public static bool missfiledir = false;
         public static bool missfiles = false;
@@ -223,7 +224,6 @@ namespace MTGdb
                 {
                     allcards[i].Pricetotal = Math.Round(Convert.ToDouble(allcards[i].Prices["usd"]) * allcards[i].Amount, 2);
                 }
-
             }
 
             cardsbytype.Sort((x, y) =>

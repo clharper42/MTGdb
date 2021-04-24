@@ -141,7 +141,7 @@ namespace MTGdb
         [Ignore]
         public double Pricetotal { get; set; }
         [Ignore]
-        private static int dbid = 0;
+        public static int dbid = 0;
         public Card()
         {
             Database_id = dbid;

@@ -9,13 +9,13 @@ namespace MTGdb
         public string Name { get; set; }
         public string Description { get; set; }
         public List<CardInList> TheList { get; private set; }
-        public List<int> NumOfCard { get; private set; }
+        //public List<int> NumOfCard { get; private set; }
         public CardList(string name, string description)
         {
             Name = name;
             Description = description;
             TheList = new List<CardInList>();
-            NumOfCard = new List<int>();
+            //NumOfCard = new List<int>();
         }
 
         public override string ToString()
