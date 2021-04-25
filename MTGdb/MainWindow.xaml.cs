@@ -73,10 +73,6 @@ namespace MTGdb
             CardDispCreateList.ItemsSource = Program.allcards;
             LoadListSelc.ItemsSource = loadablefilepaths;
 
-            //theitemsource = CardDispCreateList.ItemsSource;
-            //CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(theitemsource);
-            //view.Filter = MainDisplay_Filter;
-
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -114,6 +110,7 @@ namespace MTGdb
 
                 if (selection.Equals("1"))
                 {
+                    //Main Dispaly
                     CardDisp.Visibility = Visibility.Visible;
                     theitemsource = CardDisp.ItemsSource;
                     CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(theitemsource);
@@ -127,12 +124,7 @@ namespace MTGdb
                 }
                 else if (selection.Equals("2"))
                 {
-                    //CardDispColor.Visibility = Visibility.Visible;
-                    //CollectionView view = (CollectionView)new CollectionViewSource { Source = Program.cardsbycolorandcmc }.View;
-                    //PropertyGroupDescription groupDescription = new PropertyGroupDescription("Colorstring");
-                    //view.GroupDescriptions.Add(groupDescription);
-                    //CardDispColor.ItemsSource = view;
-
+                    //Cards By Color
                     CardDispColor.Visibility = Visibility.Visible;
                     CollectionView view = (CollectionView)new CollectionViewSource { Source = new ObservableCollection<Card>(Program.cardsbycolorandcmc) }.View;
                     PropertyGroupDescription groupDescription = new PropertyGroupDescription("Colorstring");
@@ -147,6 +139,7 @@ namespace MTGdb
                 }
                 else if (selection.Equals("3"))
                 {
+                    //Cards By Type
                     CardDispColorType.Visibility = Visibility.Visible;
                     CollectionView view = (CollectionView)new CollectionViewSource { Source = Program.cardsbytype }.View;
                     PropertyGroupDescription groupDescription = new PropertyGroupDescription("Coloridfilter");
@@ -160,6 +153,7 @@ namespace MTGdb
                 }
                 else if (selection.Equals("4"))
                 {
+                    //Cards By Subtype
                     CardDispColorSubtype.Visibility = Visibility.Visible;
                     CollectionView view = (CollectionView)new CollectionViewSource { Source = Program.cardsbysubtype }.View;
                     PropertyGroupDescription groupDescription = new PropertyGroupDescription("Coloridfilter");
@@ -173,6 +167,7 @@ namespace MTGdb
                 }
                 else if (selection.Equals("5"))
                 {
+                    //Cards By CMC
                     CardDispColorCMC.Visibility = Visibility.Visible;
                     CollectionView view = (CollectionView)new CollectionViewSource { Source = Program.cardsbycolorandcmc }.View;
                     PropertyGroupDescription groupDescription = new PropertyGroupDescription("Coloridcmc");
@@ -186,6 +181,7 @@ namespace MTGdb
                 }
                 else if (selection.Equals("6"))
                 {
+                    //Cards By Keyword
                     CardDispColorKeyword.Visibility = Visibility.Visible;
                     CollectionView view = (CollectionView)new CollectionViewSource { Source = Program.cardsbykeyword }.View;
                     PropertyGroupDescription groupDescription = new PropertyGroupDescription("Coloridfilter");
@@ -199,6 +195,7 @@ namespace MTGdb
                 }
                 else if (selection.Equals("7"))
                 {
+                    //Cards By Price
                     CardDispPrice.Visibility = Visibility.Visible;
                     theitemsource = CardDispPrice.ItemsSource;
                     CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(theitemsource);
@@ -208,6 +205,7 @@ namespace MTGdb
                 }
                 else if (selection.Equals("8"))
                 {
+                    //Switch To List View
                     CardViewSelet.UnselectAll();
 
                     CardViewSelet.Visibility = Visibility.Hidden;
@@ -258,6 +256,7 @@ namespace MTGdb
 
         private void CardDisp_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            //Card Selection Changed
             if (e.AddedItems.Count > 0)
             {
                 Card selc = e.AddedItems[0] as Card;
@@ -275,13 +274,11 @@ namespace MTGdb
                     CardImgF2.Source = new BitmapImage(new Uri(selc.Card_faces[1].Image_uris["normal"]));
                 }
             }
-            //ListBoxItem lbi = ((sender as ListBox).SelectedItem as ListBoxItem);
-            //string cardsel = lbi.Content.ToString();
-            //CardImg.Source = new BitmapImage(new Uri(Program.allcards[Convert.ToInt32(cardsel[cardsel.Length - 1].ToString())].Image_uris["normal"]));
         }
 
         private void CardDispColorFil_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            //Card Selection Changed On Grouped View
             if (e.AddedItems.Count > 0)
             {
                 Card selc = (e.AddedItems[0] as CardWithFilter).Thecard;
@@ -299,13 +296,11 @@ namespace MTGdb
                     CardImgF2.Source = new BitmapImage(new Uri(selc.Card_faces[1].Image_uris["normal"]));
                 }
             }
-            //ListBoxItem lbi = ((sender as ListBox).SelectedItem as ListBoxItem);
-            //string cardsel = lbi.Content.ToString();
-            //CardImg.Source = new BitmapImage(new Uri(Program.allcards[Convert.ToInt32(cardsel[cardsel.Length - 1].ToString())].Image_uris["normal"]));
         }
 
         private void CardDispPriceColumnHeader_Click(object sender, RoutedEventArgs e)
         {
+            //Sorting View
             GridViewColumnHeader column = (sender as GridViewColumnHeader);
             string sortBy = column.Tag.ToString();
 
@@ -333,6 +328,7 @@ namespace MTGdb
 
         private void CardDispColumnHeader_Click(object sender, RoutedEventArgs e)
         {
+            //Sorting View
             GridViewColumnHeader column = (sender as GridViewColumnHeader);
             string sortBy = column.Tag.ToString();
 
@@ -359,12 +355,14 @@ namespace MTGdb
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            //Drag Display Around
             if (e.ChangedButton == MouseButton.Left)
                 this.DragMove();
         }
 
         private void W_CheckedEvent(object sender, RoutedEventArgs e)
         {
+            //Add Color To Filter
             if (!colorsfil.Contains("W"))
             {
                 colorsfil = colorsfil + "W";
@@ -385,6 +383,7 @@ namespace MTGdb
 
         private void U_CheckedEvent(object sender, RoutedEventArgs e)
         {
+            //Add Color To Filter
             if (!colorsfil.Contains("U"))
             {
                 colorsfil = colorsfil + "U";
@@ -405,6 +404,7 @@ namespace MTGdb
 
         private void B_CheckedEvent(object sender, RoutedEventArgs e)
         {
+            //Add Color To Filter
             if (!colorsfil.Contains("B"))
             {
                 colorsfil = colorsfil + "B";
@@ -425,6 +425,7 @@ namespace MTGdb
 
         private void R_CheckedEvent(object sender, RoutedEventArgs e)
         {
+            //Add Color To Filter
             if (!colorsfil.Contains("R"))
             {
                 colorsfil = colorsfil + "R";
@@ -445,6 +446,7 @@ namespace MTGdb
 
         private void G_CheckedEvent(object sender, RoutedEventArgs e)
         {
+            //Add Color To Filter
             if (!colorsfil.Contains("G"))
             {
                 colorsfil = colorsfil + "G";
@@ -465,6 +467,7 @@ namespace MTGdb
 
         private void C_CheckedEvent(object sender, RoutedEventArgs e)
         {
+            //Add Color To Filter
             if (!colorsfil.Contains("C"))
             {
                 colorsfil = colorsfil + "C";
@@ -486,6 +489,7 @@ namespace MTGdb
 
         private void Contains_CheckedEvent(object sender, RoutedEventArgs e)
         {
+            //Sets Filter To See If Card Contains Atleast One Of The Selected Colors
             contains = true;
             CollectionViewSource.GetDefaultView(theitemsource).Refresh();
         }
@@ -545,36 +549,43 @@ namespace MTGdb
         }
         private void CardName_Textchanged(object sender, TextChangedEventArgs e)
         {
+            //Filter By Card Name
             CollectionViewSource.GetDefaultView(theitemsource).Refresh();
         }
 
         private void Type_Textchanged(object sender, TextChangedEventArgs e)
         {
+            //Filter By Card Type
             CollectionViewSource.GetDefaultView(theitemsource).Refresh();
         }
 
         private void Subtype_Textchanged(object sender, TextChangedEventArgs e)
         {
+            //Filter By Card Subtype
             CollectionViewSource.GetDefaultView(theitemsource).Refresh();
         }
 
         private void Keyword_Textchanged(object sender, TextChangedEventArgs e)
         {
+            //Filter By Card Keyword
             CollectionViewSource.GetDefaultView(theitemsource).Refresh();
         }
 
         private void CMC_Textchanged(object sender, TextChangedEventArgs e)
         {
+            //Filter By Card CMC
             CollectionViewSource.GetDefaultView(theitemsource).Refresh();
         }
 
         private void Textbox_Textchanged(object sender, TextChangedEventArgs e)
         {
+            //Filter By Card Textbox
             CollectionViewSource.GetDefaultView(theitemsource).Refresh();
         }
 
         private bool CheckCard(Card card)
         {
+            //Fitler
             bool pass = false;
             if (colorsfil.Length > 0)
             {
@@ -925,7 +936,7 @@ namespace MTGdb
 
         private void RemoveCard_Click(object sender, RoutedEventArgs e)
         {
-            // have selected card varabile and check if card is selected, refresh display, check on amount (if num and if valid amount)
+            //Remove Card From DB
             if(!(selectedcard is null))
             {
                 if(RemoveBox.Text.Length > 0 && Regex.IsMatch(RemoveBox.Text, @"^[0-9]+$") && Convert.ToInt32(RemoveBox.Text) > 0 && Convert.ToInt32(RemoveBox.Text) <= selectedcard.Amount)
@@ -1019,24 +1030,9 @@ namespace MTGdb
 
                     RemoveBox.Text = "";
 
-                    //refresh view
-
                     CardDisp.Items.Refresh();
                     CardDisp.UnselectAll();
-                    //CardDisp.Items.Refresh();
-                    //CardDisp.UnselectAll();
-                    //CardDispPrice.Items.Refresh();
-                    //CardDispPrice.UnselectAll();
-                    //CardDispColorCMC.Items.Refresh();
-                    //CardDispColorCMC.UnselectAll();
-                    //CardDispColor.Items.Refresh();
-                    //CardDispColor.UnselectAll();
-                    //CardDispColorType.Items.Refresh();
-                    //CardDispColorType.UnselectAll();
-                    //CardDispColorSubtype.Items.Refresh();
-                    //CardDispColorSubtype.UnselectAll();
-                    //CardDispColorKeyword.Items.Refresh();
-                    //CardDispColorKeyword.UnselectAll();
+
                 }
                 else
                 {
@@ -1100,32 +1096,9 @@ namespace MTGdb
 
                 selectedloadablefile = "";
 
-                //WBox.Visibility = Visibility.Visible;
-                //UBox.Visibility = Visibility.Visible;
-                //BBox.Visibility = Visibility.Visible;
-                //RBox.Visibility = Visibility.Visible;
-                //GBox.Visibility = Visibility.Visible;
-                //CBox.Visibility = Visibility.Visible;
-                //CardNameBox.Visibility = Visibility.Visible;
-                //ExactOne.Visibility = Visibility.Visible;
-                //TypeBox.Visibility = Visibility.Visible;
-                //ExactTwo.Visibility = Visibility.Visible;
-                //CardNameTxt.Visibility = Visibility.Visible;
-                //FilterLable.Visibility = Visibility.Visible;
-                //SubtypeBox.Visibility = Visibility.Visible;
-                //SubtypeTxt.Visibility = Visibility.Visible;
-                //ExactThree.Visibility = Visibility.Visible;
-                //KeywordBox.Visibility = Visibility.Visible;
-                //KeywordTxt.Visibility = Visibility.Visible;
-                //ExactFour.Visibility = Visibility.Visible;
-                //CMCBox.Visibility = Visibility.Visible;
-                //CMCTxt.Visibility = Visibility.Visible;
-                //TextBox.Visibility = Visibility.Visible;
-                //CardTextTxt.Visibility = Visibility.Visible;
-                //HasBox.Visibility = Visibility.Visible;
-
                 if (selection.Equals("1"))
                 {
+                    //View All Lists
                     CreateSaveBtn.Content = "Save";
                     ListCardDispCreate.Height = 219;
                     Thickness margin = ListCardDispCreate.Margin;
@@ -1141,6 +1114,7 @@ namespace MTGdb
                 }
                 else if (selection.Equals("2"))
                 {
+                    //Create List
                     CreateSaveBtn.Content = "Create";
                     ListSelc.Visibility = Visibility.Hidden;
                     ListCardDispCreate.Height = 259;
@@ -1154,30 +1128,7 @@ namespace MTGdb
                 }
                 else if (selection.Equals("3"))
                 {
-                    //WBox.Visibility = Visibility.Hidden;
-                    //UBox.Visibility = Visibility.Hidden;
-                    //BBox.Visibility = Visibility.Hidden;
-                    //RBox.Visibility = Visibility.Hidden;
-                    //GBox.Visibility = Visibility.Hidden;
-                    //CBox.Visibility = Visibility.Hidden;
-                    //CardNameBox.Visibility = Visibility.Hidden;
-                    //ExactOne.Visibility = Visibility.Hidden;
-                    //TypeBox.Visibility = Visibility.Hidden;
-                    //ExactTwo.Visibility = Visibility.Hidden;
-                    //CardNameTxt.Visibility = Visibility.Hidden;
-                    //FilterLable.Visibility = Visibility.Hidden;
-                    //SubtypeBox.Visibility = Visibility.Hidden;
-                    //SubtypeTxt.Visibility = Visibility.Hidden;
-                    //ExactThree.Visibility = Visibility.Hidden;
-                    //KeywordBox.Visibility = Visibility.Hidden;
-                    //KeywordTxt.Visibility = Visibility.Hidden;
-                    //ExactFour.Visibility = Visibility.Hidden;
-                    //CMCBox.Visibility = Visibility.Hidden;
-                    //CMCTxt.Visibility = Visibility.Hidden;
-                    //TextBox.Visibility = Visibility.Hidden;
-                    //CardTextTxt.Visibility = Visibility.Hidden;
-                    //HasBox.Visibility = Visibility.Hidden;
-
+                    //Print List
                     ListName.Visibility = Visibility.Hidden;
                     ListNameBox.Visibility = Visibility.Hidden;
                     ListDes.Visibility = Visibility.Hidden;
@@ -1211,6 +1162,7 @@ namespace MTGdb
                 }
                 else if (selection.Equals("4"))
                 {
+                    //Load List
                     string[] files = Directory.GetFiles(filedir);
                     loadablefilepaths.Clear();
                     foreach (string file in files)
@@ -1249,6 +1201,7 @@ namespace MTGdb
                 }
                 else if (selection.Equals("5"))
                 {
+                    //Switch To Card Display
                     ListViewSelect.UnselectAll();
 
                     CardViewSelet.Visibility = Visibility.Visible;
@@ -1288,8 +1241,7 @@ namespace MTGdb
 
         private void List_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //ListCardDisp.ItemsSource = (e.AddedItems[0] as CardList).TheList;
-
+            //Select List
             if(e.AddedItems.Count != 0)
             {
                 ListCardDispCreate.ItemsSource = (e.AddedItems[0] as CardList).TheList;
@@ -1312,6 +1264,7 @@ namespace MTGdb
 
         private void ListCardDisp_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            //Select Card From List
             CardDispCreateList.UnselectAll();
             if (e.AddedItems.Count > 0)
             {
@@ -1334,7 +1287,7 @@ namespace MTGdb
 
         private void CardDispListSel_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            //Select Card From List
             ListCardDispCreate.UnselectAll();
             if (e.AddedItems.Count > 0)
             {
@@ -1352,14 +1305,11 @@ namespace MTGdb
                     CardImgF2.Source = new BitmapImage(new Uri(selc.Card_faces[1].Image_uris["normal"]));
                 }
             }
-            //ListBoxItem lbi = ((sender as ListBox).SelectedItem as ListBoxItem);
-            //string cardsel = lbi.Content.ToString();
-            //CardImg.Source = new BitmapImage(new Uri(Program.allcards[Convert.ToInt32(cardsel[cardsel.Length - 1].ToString())].Image_uris["normal"]));
         }
 
         private void CreateList_Click(object sender, RoutedEventArgs e)
         {
-            //have seclected list stored here
+            //Create New List
             if (selectedlist is null && createlist == false)
             {
                 MessageBox.Show("Select List First");
@@ -1412,6 +1362,7 @@ namespace MTGdb
 
         private void DeleteList_Click(object sender, RoutedEventArgs e)
         {
+            //Delete Selected List
             if(selectedlist is null && dispalypage)
             {
                 MessageBox.Show("Select List First");
@@ -1448,6 +1399,7 @@ namespace MTGdb
 
         private bool AddUpListCheck()
         {
+            //Does Check For Adding/Updating/Removing Card In A List
             if(selectedlist is null && dispalypage)
             {
                 MessageBox.Show("Select List First");
@@ -1487,6 +1439,7 @@ namespace MTGdb
 
         private void AddToList_Click(object sender, RoutedEventArgs e)
         {
+            //Add Card To List
             if(AddUpListCheck())
             {
                 if (cardidsincurlist.Contains(Program.allcards[Convert.ToInt32(CardDBIDBox.Text)].Database_id))
@@ -1506,6 +1459,7 @@ namespace MTGdb
 
         private void UpdateCardInList_Click(object sender, RoutedEventArgs e)
         {
+            //Update Card In List
             if(AddUpListCheck())
             {
                 if (cardidsincurlist.Contains(Program.allcards[Convert.ToInt32(CardDBIDBox.Text)].Database_id))
@@ -1522,6 +1476,7 @@ namespace MTGdb
 
         private void RemoveCardInList_Click(object sender, RoutedEventArgs e)
         {
+            //Remove Card From List
             if(AddUpListCheck())
             {
                 if (cardidsincurlist.Contains(Program.allcards[Convert.ToInt32(CardDBIDBox.Text)].Database_id))
@@ -1555,6 +1510,7 @@ namespace MTGdb
 
         private void ArchTap_Click(object sender, RoutedEventArgs e)
         {
+            //Printing List
             if(selectedlist is null)
             {
                 MessageBox.Show("Select List First");
@@ -1582,6 +1538,7 @@ namespace MTGdb
 
         private void StrCitCrdKin_Click(object sender, RoutedEventArgs e)
         {
+            //Printing List
             if (selectedlist is null)
             {
                 MessageBox.Show("Select List First");
@@ -1609,6 +1566,7 @@ namespace MTGdb
 
         private void TCGP_Click(object sender, RoutedEventArgs e)
         {
+            //Printing List
             if (selectedlist is null)
             {
                 MessageBox.Show("Select List First");
@@ -1636,6 +1594,7 @@ namespace MTGdb
 
         private void Loadable_Click(object sender, RoutedEventArgs e)
         {
+            //Printing List
             if (selectedlist is null)
             {
                 MessageBox.Show("Select List First");
@@ -1671,6 +1630,7 @@ namespace MTGdb
 
         private void LoadFile_Click(object sender, RoutedEventArgs e)
         {
+            //Load List And Add Put It With The Other Lists
             if(selectedloadablefile.Equals(""))
             {
                 MessageBox.Show("Select List First");

@@ -45,8 +45,6 @@
         <Grid Grid.Row="1"
               Grid.Column="0">
             <ListBox Margin="93,0,93,0" Height="249" VerticalAlignment="Center" FontSize="20" SelectionChanged="ListBox_SelectionChanged" Visibility="Visible" Name="CardViewSelet">
-                <!--<ListBoxItem>Search For Card(s)</ListBoxItem>-->
-                <!--<ListBoxItem>Search By Card Text</ListBoxItem>-->
                 <ListBoxItem>1 - Display All Cards</ListBoxItem>
                 <ListBoxItem>2 - Filter By Color</ListBoxItem>
                 <ListBoxItem>3 - Filter By Type</ListBoxItem>
@@ -55,9 +53,6 @@
                 <ListBoxItem>6 - Filter By Keyword</ListBoxItem>
                 <ListBoxItem>7 - Display Prices</ListBoxItem>
                 <ListBoxItem>8 - Manage Lists</ListBoxItem>
-                <!--<ListBoxItem>Manage Lists</ListBoxItem>-->
-                <!--<ListBoxItem>Remove Card</ListBoxItem>-->
-                <!-- CMC, Display all, Type/subtype, color, keyword, pricing done  -->
             </ListBox>
 
             <!-- LIST STUFF -->
@@ -67,9 +62,7 @@
                 <ListBoxItem>2 - Create List</ListBoxItem>
                 <ListBoxItem>3 - Print List</ListBoxItem>
                 <ListBoxItem>4 - Load List</ListBoxItem>
-                <ListBoxItem>5- View Cards</ListBoxItem>
-                <!--  <ListBoxItem>5 - Print List to File</ListBoxItem>
-                <ListBoxItem>6 - Load List From File</ListBoxItem>-->
+                <ListBoxItem>5 - View Cards</ListBoxItem>
             </ListBox>
         </Grid>
         <Grid Grid.Column="2"
@@ -411,9 +404,6 @@
             <Button Content="Remove" HorizontalAlignment="Left" Margin="326,637,0,0" VerticalAlignment="Top" Background="Red" Foreground="White" FontFamily="Fonts/#Quicksand" Width="64"  Name="RemoveCardBtn" Click="RemoveCard_Click" FontSize="10" RenderTransformOrigin="0.495,0.524"/>
             <TextBox HorizontalAlignment="Left" Margin="304,638,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="20" RenderTransformOrigin="0.515,0.538" Height="15" FontSize="8" MaxLength="3" Name="RemoveBox"/>
             <TextBlock HorizontalAlignment="Left" Height="15" Margin="256,638,0,0" Text="Amount:" TextWrapping="Wrap" VerticalAlignment="Top" Width="48" FontFamily="Fonts/#Quicksand" Foreground="White" Name="Removetxt" Visibility="Visible"/>
-
-            <!--<ListBox Height="217" VerticalAlignment="Center" Name="CardDisp" SelectionChanged="CardDisp_SelectionChanged" SelectionMode="Single" HorizontalAlignment="Center" Width="280"/>-->
-            <!--<TextBlock Text="NAME - SET - PRINTING - AMOUNT - ID" TextWrapping="Wrap" Margin="0,136,0,0" Foreground="White" FontFamily="Fonts/#Quicksand" FontSize="13" VerticalAlignment="Top" HorizontalAlignment="Center"/>-->
 
             <!-- LIST STUFF -->
 
