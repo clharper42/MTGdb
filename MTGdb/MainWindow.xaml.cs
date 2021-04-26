@@ -58,7 +58,7 @@ namespace MTGdb
             }
 
             InitializeComponent();
-            converttooc = new ObservableCollection<Card>(Program.allcards);
+            converttooc = new ObservableCollection<Card>(Program.allcards); // used for card removal
             CardDisp.ItemsSource = converttooc;
             CardDispPrice.ItemsSource = converttooc;
             currentlistview = CardDisp;

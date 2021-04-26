@@ -28,31 +28,90 @@ namespace MTGdb
         public static void Start()
         {
             string filedirc = Directory.GetCurrentDirectory() + "/Files";
-            if (!System.IO.Directory.Exists(filedirc))
-            {
-                //Console.WriteLine("Mising 'Files' Directory");
-                //Console.ReadLine();
-                //Environment.Exit(0);
-                missfiledir = true;
-                return;
-            }
-
             string dbpath = filedirc + "/Carddb.csv";
             string tcgpath = filedirc + "/TCGplayer.csv";
 
-            if (!File.Exists(dbpath) || !File.Exists(tcgpath))
+            if(CheckDirAndFiles(dbpath, tcgpath, filedirc))
             {
-                //Console.WriteLine("Mising Carddb.csv and/or TCGplayer.csv In 'Files' Directory");
-                //Console.ReadLine();
-                //Environment.Exit(0);
-                missfiles = true;
                 return;
             }
 
-            args = new string[] { dbpath, tcgpath };
 
+            args = new string[] { dbpath, tcgpath };
             List<ExcelCard> carddb = new List<ExcelCard>(); // REF TO DB
             List<ExcelCard> tcgplayercards = new List<ExcelCard>();
+            LoadDBFromExcelFiles(carddb, tcgplayercards, args);
+
+            GetCardsFromScryfall(carddb);
+
+            allcards.Sort((x, y) => {
+                if (x.Name.CompareTo(y.Name) != 0)
+                {
+                    return x.Name.CompareTo(y.Name);
+                }
+                else if (x.Set.CompareTo(y.Set) != 0)
+                {
+                    return x.Set.CompareTo(y.Set);
+                }
+                else
+                {
+                    return x.Collector_number.CompareTo(y.Collector_number);
+                }
+            });
+            carddb.Sort((x, y) => {
+                if (x.Name.CompareTo(y.Name) != 0)
+                {
+                    return x.Name.CompareTo(y.Name);
+                }
+                else if (x.Set.CompareTo(y.Set) != 0)
+                {
+                    return x.Set.CompareTo(y.Set);
+                }
+                else
+                {
+                    return x.Collector_number.CompareTo(y.Collector_number);
+                }
+            });
+
+            AddInformationAboutCards(carddb);
+
+            cardsbytype.Sort((x, y) =>
+            {
+                return x.Coloridfilter.Display.CompareTo(y.Coloridfilter.Display);
+            });
+
+            cardsbysubtype.Sort((x, y) =>
+            {
+                return x.Coloridfilter.Display.CompareTo(y.Coloridfilter.Display);
+            });
+
+           cardsbykeyword.Sort((x, y) =>
+           {
+               return x.Coloridfilter.Display.CompareTo(y.Coloridfilter.Display);
+           });
+
+            cardsbycolorandcmc.Sort((x, y) =>
+            {
+                return x.Coloridcmc.Display.CompareTo(y.Coloridcmc.Display);
+            });
+        }
+        private static bool CheckDirAndFiles(string dbpath, string tcgpath, string filedirc)
+        {
+            if (!System.IO.Directory.Exists(filedirc))
+            {
+                missfiledir = true;
+                return true;
+            }
+
+            if (!File.Exists(dbpath) || !File.Exists(tcgpath))
+            {
+                missfiles = true;
+                return true;
+            }
+            return false;
+        }
+        private static void LoadDBFromExcelFiles(List<ExcelCard> carddb, List<ExcelCard> tcgplayercards, string[] args)
+        {
             var csvTable = new DataTable();
             using (var csvReader = new LumenWorks.Framework.IO.Csv.CsvReader(new StreamReader(System.IO.File.OpenRead(@args[0])), true))
             {
@@ -102,19 +161,20 @@ namespace MTGdb
                     }
                 }
             }
-
-
+        }
+        private static void GetCardsFromScryfall(List<ExcelCard> carddb)
+        {
             ICollection<CardSearch> CardsToSearch = new List<CardSearch>();
             string jsonstring;
             StringContent httpContent;
             HttpClient client = new HttpClient();
             HttpResponseMessage response;
             Cards returncards;
-            //List<Card> allcards = new List<Card>(); // HAS ALL CARDS AND INFROMATION
+            const int maxcardstoserach = 75;
             for (int i = 0; i < carddb.Count; i++)
             {
                 CardsToSearch.Add(new CardSearch { Set = carddb[i].Set, Collector_number = carddb[i].Collector_number });
-                if (CardsToSearch.Count == 75 || i == carddb.Count - 1)
+                if (CardsToSearch.Count == maxcardstoserach || i == carddb.Count - 1)
                 {
                     jsonstring = JsonConvert.SerializeObject(new Identifier { IDs = CardsToSearch });
                     httpContent = new StringContent(jsonstring, Encoding.UTF8, "application/json");
@@ -124,38 +184,12 @@ namespace MTGdb
                     CardsToSearch.Clear();
                 }
             }
-
-            allcards.Sort((x, y) => {
-                if (x.Name.CompareTo(y.Name) != 0)
-                {
-                    return x.Name.CompareTo(y.Name);
-                }
-                else if (x.Set.CompareTo(y.Set) != 0)
-                {
-                    return x.Set.CompareTo(y.Set);
-                }
-                else
-                {
-                    return x.Collector_number.CompareTo(y.Collector_number);
-                }
-            });
-            carddb.Sort((x, y) => {
-                if (x.Name.CompareTo(y.Name) != 0)
-                {
-                    return x.Name.CompareTo(y.Name);
-                }
-                else if (x.Set.CompareTo(y.Set) != 0)
-                {
-                    return x.Set.CompareTo(y.Set);
-                }
-                else
-                {
-                    return x.Collector_number.CompareTo(y.Collector_number);
-                }
-            });
-
+        }
+        private static void AddInformationAboutCards(List<ExcelCard> carddb)
+        {
             for (int i = 0; i < allcards.Count; i++)
             {
+                //Give cards pulled from Sryfall the amount of and 'special name' of the matching cards from the excel db
                 allcards[i].Amount = carddb[i].Amount;
                 allcards[i].Special_name = carddb[i].Special_name;
                 if ("Foil".Equals(carddb[i].Printing))
@@ -170,11 +204,11 @@ namespace MTGdb
 
                 //color and cmc
                 allcards[i].Colorstring = new string(allcards[i].Color_identity.ToArray());
-                if(allcards[i].Colorstring.Length == 0)
+                if (allcards[i].Colorstring.Length == 0)
                 {
-                    allcards[i].Colorstring = "C";
+                    allcards[i].Colorstring = "C"; //Add "C" for colorless since API does not provide an id for colorless cards
                 }
-                allcards[i].Coloridcmc = new ColorIdCmc(allcards[i].Cmc, allcards[i].Colorstring);
+                allcards[i].Coloridcmc = new ColorIdCmc(allcards[i].Cmc, allcards[i].Colorstring); //Used for grouping dispaly
                 cardsbycolorandcmc.Add(allcards[i]);
 
 
@@ -183,8 +217,7 @@ namespace MTGdb
                 {
                     if (allcards[i].Type_line.Contains('—'))
                     {
-                        cardsbytype.Add(new CardWithFilter { Thecard = allcards[i], Coloridfilter = new ColorIdFilter(allcards[i].Type_line.Substring(0, allcards[i].Type_line.IndexOf('—') - 1), allcards[i].Colorstring) });
-                        //ADD SUBTYPE HERE
+                        cardsbytype.Add(new CardWithFilter { Thecard = allcards[i], Coloridfilter = new ColorIdFilter(allcards[i].Type_line.Substring(0, allcards[i].Type_line.IndexOf('—') - 1), allcards[i].Colorstring) }); //Used for grouping dispaly
                         cardsbysubtype.Add(new CardWithFilter { Thecard = allcards[i], Coloridfilter = new ColorIdFilter(allcards[i].Type_line.Substring(allcards[i].Type_line.IndexOf('—') + 2, allcards[i].Type_line.Length - (allcards[i].Type_line.IndexOf('—') + 2)), allcards[i].Colorstring) });
                     }
                     else
@@ -199,7 +232,6 @@ namespace MTGdb
                         if (cardface.Type_line.Contains('—'))
                         {
                             cardsbytype.Add(new CardWithFilter { Thecard = allcards[i], Coloridfilter = new ColorIdFilter(cardface.Type_line.Substring(0, cardface.Type_line.IndexOf('—') - 1), allcards[i].Colorstring) });
-                            //ADD SUBTYPE HERE
                             cardsbysubtype.Add(new CardWithFilter { Thecard = allcards[i], Coloridfilter = new ColorIdFilter(cardface.Type_line.Substring(cardface.Type_line.IndexOf('—') + 2, cardface.Type_line.Length - (cardface.Type_line.IndexOf('—') + 2)), allcards[i].Colorstring) });
                         }
                         else
@@ -210,13 +242,13 @@ namespace MTGdb
                 }
 
                 //color and keywords
-                foreach(string keyword in allcards[i].Keywords)
+                foreach (string keyword in allcards[i].Keywords)
                 {
                     cardsbykeyword.Add(new CardWithFilter { Thecard = allcards[i], Coloridfilter = new ColorIdFilter(keyword, allcards[i].Colorstring) });
                 }
 
                 //prices
-                if(allcards[i].Printing.Equals("Foil"))
+                if (allcards[i].Printing.Equals("Foil"))
                 {
                     allcards[i].Pricetotal = Math.Round(Convert.ToDouble(allcards[i].Prices["usd_foil"]) * allcards[i].Amount, 2);
                 }
@@ -225,28 +257,7 @@ namespace MTGdb
                     allcards[i].Pricetotal = Math.Round(Convert.ToDouble(allcards[i].Prices["usd"]) * allcards[i].Amount, 2);
                 }
             }
-
-            cardsbytype.Sort((x, y) =>
-            {
-                return x.Coloridfilter.Display.CompareTo(y.Coloridfilter.Display);
-            });
-
-            cardsbysubtype.Sort((x, y) =>
-            {
-                return x.Coloridfilter.Display.CompareTo(y.Coloridfilter.Display);
-            });
-
-           cardsbykeyword.Sort((x, y) =>
-           {
-               return x.Coloridfilter.Display.CompareTo(y.Coloridfilter.Display);
-           });
-
-            cardsbycolorandcmc.Sort((x, y) =>
-            {
-                return x.Coloridcmc.Display.CompareTo(y.Coloridcmc.Display);
-            });
         }
-
         static public void CloseApp()
         {
             System.IO.File.WriteAllText(@args[0], string.Empty);
