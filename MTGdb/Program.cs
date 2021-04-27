@@ -115,26 +115,53 @@ namespace MTGdb
             var csvTable = new DataTable();
             using (var csvReader = new LumenWorks.Framework.IO.Csv.CsvReader(new StreamReader(System.IO.File.OpenRead(@args[0])), true))
             {
-                csvTable.Load(csvReader);
+                try
+                {
+                    csvTable.Load(csvReader);
+                }
+                catch
+                {
+                    throw;
+                }
             }
 
             foreach (DataRow row in csvTable.Rows)
             {
-
-                carddb.Add(new ExcelCard { Name = row.Field<string>(0), Special_name = row.Field<string>(1), Set = row.Field<string>(2), Amount = Convert.ToInt32(row.Field<string>(3)), Printing = row.Field<string>(4), Collector_number = row.Field<string>(5) });
+                try
+                {
+                    carddb.Add(new ExcelCard { Name = row.Field<string>(0), Special_name = row.Field<string>(1), Set = row.Field<string>(2), Amount = Convert.ToInt32(row.Field<string>(3)), Printing = row.Field<string>(4), Collector_number = row.Field<string>(5) });
+                }
+                catch
+                {
+                    throw;
+                }
             }
 
 
             csvTable = new DataTable();
             using (var csvReader = new LumenWorks.Framework.IO.Csv.CsvReader(new StreamReader(System.IO.File.OpenRead(@args[1])), true))
             {
-                csvTable.Load(csvReader);
+                try
+                {
+                    csvTable.Load(csvReader);
+                }
+                catch
+                {
+                    throw;
+                }
             }
 
             foreach (DataRow row in csvTable.Rows)
             {
+                try
+                {
+                    tcgplayercards.Add(new ExcelCard { Name = row.Field<string>(2), Special_name = row.Field<string>(1), Set = row.Field<string>(5), Amount = Convert.ToInt32(row.Field<string>(0)), Printing = row.Field<string>(6), Collector_number = row.Field<string>(4) });
+                }
+                catch
+                {
+                    throw;
+                }
 
-                tcgplayercards.Add(new ExcelCard { Name = row.Field<string>(2), Special_name = row.Field<string>(1), Set = row.Field<string>(5), Amount = Convert.ToInt32(row.Field<string>(0)), Printing = row.Field<string>(6), Collector_number = row.Field<string>(4) });
                 if (tcgplayercards[tcgplayercards.Count - 1].Set.ToLower().Equals("10e") && tcgplayercards[tcgplayercards.Count - 1].Printing.Equals("Foil"))
                 {
                     tcgplayercards[tcgplayercards.Count - 1].Collector_number = tcgplayercards[tcgplayercards.Count - 1].Collector_number + "★";
@@ -178,7 +205,14 @@ namespace MTGdb
                 {
                     jsonstring = JsonConvert.SerializeObject(new Identifier { IDs = CardsToSearch });
                     httpContent = new StringContent(jsonstring, Encoding.UTF8, "application/json");
-                    response = client.PostAsync(URL, httpContent).Result;
+                    try
+                    {
+                        response = client.PostAsync(URL, httpContent).Result;
+                    }
+                    catch
+                    {
+                        throw;
+                    }
                     returncards = response.Content.ReadAsAsync<Cards>().Result;
                     allcards.AddRange(returncards.Data);
                     CardsToSearch.Clear();
@@ -187,6 +221,10 @@ namespace MTGdb
         }
         private static void AddInformationAboutCards(List<ExcelCard> carddb)
         {
+            if(allcards.Count != carddb.Count)
+            {
+                throw new ArgumentException("Check CardDB/TCGplayer For Possible Invalid Card(s)");
+            }
             for (int i = 0; i < allcards.Count; i++)
             {
                 //Give cards pulled from Sryfall the amount of and 'special name' of the matching cards from the excel db

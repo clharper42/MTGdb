@@ -45,7 +45,16 @@ namespace MTGdb
         private string selectedloadablefile = "";
         public MainWindow()
         {
-            Program.Start();
+            try
+            {
+                Program.Start();
+            }
+            catch(Exception e)
+            {
+                MessageBox.Show(e.Message);
+                System.Windows.Application.Current.Shutdown();
+            }
+
             if (Program.missfiledir)
             {
                 MessageBox.Show("Mising 'Files' Directory");
@@ -1165,13 +1174,17 @@ namespace MTGdb
                     //Load List
                     string[] files = Directory.GetFiles(filedir);
                     loadablefilepaths.Clear();
-                    foreach (string file in files)
-                    {
-                        string filename = System.IO.Path.GetFileName(file);
 
-                        if (filename.Contains("Load.txt"))
+                    if(Program.allcards.Count > 0)
+                    {
+                        foreach (string file in files)
                         {
-                            loadablefilepaths.Add(new LoadableFile(file));
+                            string filename = System.IO.Path.GetFileName(file);
+
+                            if (filename.Contains("Load.txt"))
+                            {
+                                loadablefilepaths.Add(new LoadableFile(file));
+                            }
                         }
                     }
 
@@ -1320,6 +1333,10 @@ namespace MTGdb
                 {
                     if (!(ListDescBox.Text is null))
                     {
+                        if (ListDescBox.Text.Contains('_'))
+                        {
+                            MessageBox.Show("Invalid Description");
+                        }
                         selectedlist = new CardList(ListNameBox.Text, ListDescBox.Text);
                         Program.cardlists.Add(selectedlist);
                     }
@@ -1635,19 +1652,73 @@ namespace MTGdb
             {
                 MessageBox.Show("Select List First");
             }
+            else if(!System.IO.File.Exists(selectedloadablefile))
+            {
+                MessageBox.Show("File No Longer Exists");
+            }
             else
             {
-                string[] lines = System.IO.File.ReadAllLines(selectedloadablefile);
-                CardList loadlist = new CardList(lines[0],lines[1]);
                 LoadListTextBox.Text = "";
+                string[] lines;
+                try
+                {
+                    lines = System.IO.File.ReadAllLines(selectedloadablefile);
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    return;
+                }
+
+                if(lines.Length < 3)
+                {
+                    MessageBox.Show("File Is Invalid");
+                    return;
+                }
+
+                if((lines[0].Length == 0 || lines[0].Length > 50) || !(Regex.IsMatch(lines[0] + ".txt", @"^[a-zA-Z0-9](?:[a-zA-Z0-9 ._-]*[a-zA-Z0-9])?\.[a-zA-Z0-9_-]+$")))
+                {
+                    MessageBox.Show("File List Name Is Not Valid");
+                    return;
+                }
+
+                if(lines[1].Contains('_'))
+                {
+                    MessageBox.Show("Invalid Description (Leave Space After Name Line If No Description)");
+                    return;
+                }
+                else if(lines[1].Length > 50)
+                {
+                    MessageBox.Show("Description Is Too Long");
+                    return;
+                }
+
+                CardList loadlist = new CardList(lines[0],lines[1]);
                 for (int i = 2; i < lines.Length; i++)
                 {
                     string[] cardelements = lines[i].Split("_");
+
+                    if(cardelements.Length != 5)
+                    {
+                        LoadListTextBox.Text = "ERROR LOADING FILE" + Environment.NewLine + LoadListTextBox.Text;
+                        MessageBox.Show("Card In File Is Invalid");
+                        return;
+                    }
+
                     string cardname = cardelements[0];
                     string cardset = cardelements[1];
                     string cardcolnum = cardelements[2];
                     string cardprint = cardelements[3];
                     string cardnum = cardelements[4];
+
+                    if((!Regex.IsMatch(cardnum, @"^[0-9]+$")) || (!Regex.IsMatch(cardcolnum, @"^[0-9]+$")))
+                    {
+                        LoadListTextBox.Text = "ERROR LOADING FILE" + Environment.NewLine + LoadListTextBox.Text;
+                        MessageBox.Show("Card In File Is Invalid");
+                        return;
+
+                    }
+
                     int min = 0;
                     int max = Program.allcards.Count - 1;
                     int index = 0;
