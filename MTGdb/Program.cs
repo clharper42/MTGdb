@@ -31,13 +31,13 @@ namespace MTGdb
             string dbpath = filedirc + "/Carddb.csv";
             string tcgpath = filedirc + "/TCGplayer.csv";
 
-            if(CheckDirAndFiles(dbpath, tcgpath, filedirc))
+            if (CheckDirAndFiles(dbpath, tcgpath, filedirc))
             {
                 return;
             }
 
 
-            args = new string[] { dbpath, tcgpath };
+            args = new string[] { dbpath, tcgpath};
             List<ExcelCard> carddb = new List<ExcelCard>(); // REF TO DB
             List<ExcelCard> tcgplayercards = new List<ExcelCard>();
             LoadDBFromExcelFiles(carddb, tcgplayercards, args);

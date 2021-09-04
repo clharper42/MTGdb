@@ -940,6 +940,7 @@ namespace MTGdb
         private void Close_ButtonClick(object sender, RoutedEventArgs e)
         {
             Program.CloseApp();
+
             System.Windows.Application.Current.Shutdown();
         }
 
