@@ -17,6 +17,8 @@ Some cards may have issues being entered due to TCGPlayer and Scryfall having di
 
 Non-english cards do not currently work
 
+Inside the MTGdb/Files folder is a Carddb.csv file with card information which you can use to replase the Carddb.csv file from the release download so you can test out features before working on your own db
+
 <b><h3>To Use:</h3></b>
 Make sure in the directory where the application is you have a folder named "Files" with Carddb.csv and TCGplayer.csv inside. The TCGplayer file comes from the TCGplayer app and is used to read in new cards into the database. The Carddb file is where the card information is stored once you quit out of the applicaiton. If you want to have multiple databases simply save the carddb file in a diffrent directory and overwrite the carddb file in the "Files" folder with the desired database. Any lists created and printed will be stored in the "Files" folder.
 
